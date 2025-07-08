@@ -1,6 +1,7 @@
 import React from 'react';
 import './index.scss';
 import Button from '../../components/Button';
+import Input from '../../components/Input';
 
 const SectionTitle = 'Top Controls';
 
@@ -9,7 +10,8 @@ class TopControls extends React.Component {
     return (
       <section>
         {SectionTitle}
-        <div>
+        <div className="top-container">
+          <Input type="text" />
           <Button className={['btn']} name="Search"></Button>
         </div>
       </section>
