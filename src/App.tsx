@@ -1,9 +1,14 @@
 import React from 'react';
 import './App.css';
+import TopControls from './views/TopControls';
 
 class App extends React.Component {
   render() {
-    return <p>Hello</p>;
+    return (
+      <div>
+        <TopControls />
+      </div>
+    );
   }
 }
 
