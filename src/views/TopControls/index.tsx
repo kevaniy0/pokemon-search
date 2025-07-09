@@ -9,7 +9,7 @@ class TopControls extends React.Component {
   render() {
     return (
       <section>
-        {SectionTitle}
+        <h2>{SectionTitle}</h2>
         <div className="top-container">
           <Input type="text" />
           <Button className={['btn']} name="Search"></Button>
