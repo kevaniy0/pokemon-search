@@ -35,11 +35,16 @@ class App extends React.Component {
       isLoading: true,
     });
 
-    const history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
+    const history: Pokemon[] = JSON.parse(
+      localStorage.getItem('searchHistory') || '[]'
+    );
 
     try {
       const pokemon = await this.api.getPokemon(value);
-      const newHistory = [pokemon, ...history];
+      const checkedHistory = history.filter(
+        (item) => item.name !== pokemon.name
+      );
+      const newHistory = [pokemon, ...checkedHistory];
       this.setState({
         searchItem: '',
         results: newHistory,
@@ -59,7 +64,6 @@ class App extends React.Component {
     if (!history) return;
 
     const items: string[] = JSON.parse(history);
-    console.log(items);
     this.setState({ results: items });
   }
 
