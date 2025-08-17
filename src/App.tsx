@@ -59,7 +59,8 @@ class App extends React.Component {
     if (!history) return;
 
     const items: string[] = JSON.parse(history);
-    this.setState({ searchItem: items[0] });
+    console.log(items);
+    this.setState({ results: items });
   }
 
   render() {
