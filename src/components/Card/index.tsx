@@ -1,17 +1,17 @@
 import React from 'react';
 import './index.scss';
-
-type CardProps = {
-  name: string;
-  description: string;
-};
+import type { CardProps } from '../../types/props';
 
 class Card extends React.Component<CardProps> {
   render(): React.ReactNode {
     return (
       <div className="card-item">
         <p>{this.props.name}</p>
-        <p>{this.props.description}</p>
+        <p>{this.props.abilities}</p>
+        <p>{this.props.type}</p>
+        <p>{this.props.height}</p>
+        <p>{this.props.weight}</p>
+        <img src={this.props.pic} alt="" />
       </div>
     );
   }

@@ -10,7 +10,7 @@ type ButtonProps = {
 
 class Button extends React.Component<ButtonProps> {
   render() {
-    const classes = this.props.className.join(' ');
+    const classes = this.props.className.join(' ') ?? [];
     return (
       <button
         onClick={this.props.onClick}
