@@ -2,6 +2,8 @@ import type { Pokemon } from './pokemon';
 
 export type PokemonDataProps = {
   results: Pokemon[];
+  isLoading?: boolean;
+  error?: string | null;
 };
 
 export type CardProps = {
