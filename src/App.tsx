@@ -5,6 +5,8 @@ import type { Pokemon } from './types/pokemon';
 import TopControls from './views/TopControls';
 import Results from './views/Results';
 import Button from './components/Button';
+import getDelay from './utils/getDelay';
+// import Loader from './components/Loader';
 
 type AppState = {
   searchItem: string;
@@ -39,23 +41,31 @@ class App extends React.Component {
       localStorage.getItem('searchHistory') || '[]'
     );
 
+    const startLoadingTime = Date.now();
     try {
       const pokemon = await this.api.getPokemon(value);
       const checkedHistory = history.filter(
         (item) => item.name !== pokemon.name
       );
       const newHistory = [pokemon, ...checkedHistory];
-      this.setState({
-        searchItem: '',
-        results: newHistory,
-      });
-      localStorage.setItem('searchHistory', JSON.stringify(newHistory));
+      const delay = getDelay(startLoadingTime);
+      setTimeout(() => {
+        this.setState({
+          searchItem: '',
+          results: newHistory,
+          isLoading: false,
+          error: null,
+        });
+        localStorage.setItem('searchHistory', JSON.stringify(newHistory));
+      }, delay);
     } catch (error) {
-      this.setState({ error: (error as Error).message });
-    } finally {
-      this.setState({
-        isLoading: false,
-      });
+      const delay = getDelay(startLoadingTime);
+      setTimeout(() => {
+        this.setState({
+          error: (error as Error).message,
+          isLoading: false,
+        });
+      }, delay);
     }
   };
 
@@ -76,7 +86,11 @@ class App extends React.Component {
           onChange={this.handleInput}
           onClick={this.handleSearch}
         />
-        <Results results={results} />
+        <Results
+          results={results}
+          isLoading={this.state.isLoading}
+          error={this.state.error}
+        />
         <Button name="Error" className={['error-btn', 'btn']} />
       </div>
     );
