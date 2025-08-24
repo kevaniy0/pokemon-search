@@ -5,7 +5,7 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 
 class Input extends React.Component<InputProps> {
   render(): React.ReactNode {
-    return <input {...this.props}></input>;
+    return <input placeholder="type a pokemon name" {...this.props}></input>;
   }
 }
 
