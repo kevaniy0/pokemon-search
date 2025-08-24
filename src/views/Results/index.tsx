@@ -9,10 +9,20 @@ const SectionTitle = 'Results';
 class Results extends React.Component<PokemonDataProps> {
   render(): React.ReactNode {
     const { results, isLoading } = this.props;
-    if (isLoading) return <Loader />;
+    if (isLoading)
+      return (
+        <section>
+          <h2 className="text-3xl font-bold text-center my-6 text-gray-600">
+            {SectionTitle}
+          </h2>
+          <Loader />
+        </section>
+      );
     return (
       <section>
-        <h2>{SectionTitle}</h2>
+        <h2 className="text-3xl font-bold text-center my-6 text-gray-600">
+          {SectionTitle}
+        </h2>
         <CardList results={results} />
       </section>
     );

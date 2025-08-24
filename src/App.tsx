@@ -80,7 +80,7 @@ class App extends React.Component {
   render() {
     const { searchItem, results } = this.state;
     return (
-      <div>
+      <div className="container mx-auto">
         <TopControls
           value={searchItem}
           onChange={this.handleInput}
@@ -91,7 +91,31 @@ class App extends React.Component {
           isLoading={this.state.isLoading}
           error={this.state.error}
         />
-        <Button name="Error" className={['error-btn', 'btn']} />
+        <Button
+          name="Error"
+          className={[
+            'error-btn',
+            'btn',
+            'text-gray-600',
+            'bg-white',
+            'font-medium',
+            'cursor-pointer',
+            'border-2',
+            'border-gray-600',
+            'rounded',
+            'transition-colors',
+            'duration-300',
+            'p-1',
+            'hover:bg-black',
+            'hover:text-white',
+            'hover:border-black',
+            'block',
+            'w-max',
+            'm-auto',
+            'mt-5',
+            'mb-5',
+          ]}
+        />
       </div>
     );
   }

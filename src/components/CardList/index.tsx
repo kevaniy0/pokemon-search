@@ -8,11 +8,31 @@ class CardList extends React.Component<PokemonDataProps> {
     const results = this.props.results;
 
     return (
-      <div>
+      <div className="cards-wrapper font-medium text-gray-600">
+        <div className="card-item flex">
+          <div className="flex flex-1 h-20 justify-center items-center border border-black font-bold ">
+            name
+          </div>
+          <div className="flex flex-1 h-20 justify-center items-center border-t border-r border-b border-black font-bold ">
+            abilities
+          </div>
+          <div className="flex flex-1 h-20 justify-center items-center border-t border-r border-b border-black font-bold ">
+            type
+          </div>
+          <div className="flex flex-1 h-20 justify-center items-center border-t border-r border-b border-black font-bold ">
+            height
+          </div>
+          <div className="flex flex-1 h-20 justify-center items-center border-t border-r border-b border-black font-bold ">
+            weight
+          </div>
+          <div className="flex flex-1 h-20 justify-center items-center border-t border-r border-b border-black font-bold ">
+            image
+          </div>
+        </div>
         {results.map((item) => {
           const abilities = item.abilities
             .map((value) => value.ability.name)
-            .join(' / ');
+            .join(', ');
           return (
             <Card
               key={item.name}
