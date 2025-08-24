@@ -5,10 +5,14 @@ import type { PokemonDataProps } from '../../types/props';
 
 class CardList extends React.Component<PokemonDataProps> {
   render(): React.ReactNode {
-    const results = this.props.results;
+    // const results = this.props.results;
+    const { isLoading, results } = this.props;
 
     return (
-      <div className="cards-wrapper font-medium text-gray-600">
+      // <div className="cards-wrapper font-medium text-gray-600">
+      <div
+        className={`cards-wrapper font-medium text-gray-600 ${isLoading ? 'opacity-20' : 'opacity-100'}`}
+      >
         <div className="card-item flex">
           <div className="flex flex-1 h-20 justify-center items-center border border-black font-bold ">
             name

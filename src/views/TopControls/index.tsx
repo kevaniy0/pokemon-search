@@ -2,12 +2,8 @@ import React from 'react';
 import './index.scss';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
-
-type InputProps = {
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onClick: () => Promise<void>;
-};
+import Loader from '../../components/Loader';
+import type { InputProps } from '../../types/props';
 
 const SectionTitle = 'Top Controls';
 
@@ -19,6 +15,7 @@ class TopControls extends React.Component<InputProps> {
           {SectionTitle}
         </h2>
         <div className="top-container flex justify-center gap-x-4">
+          {this.props.isLoading && <Loader />}
           <Input
             className="outline-0 border-2 rounded px-1 text-gray-600 font-medium  focus:border-3"
             type="text"

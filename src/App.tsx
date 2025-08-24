@@ -82,6 +82,7 @@ class App extends React.Component {
     return (
       <div className="container mx-auto">
         <TopControls
+          isLoading={this.state.isLoading}
           value={searchItem}
           onChange={this.handleInput}
           onClick={this.handleSearch}

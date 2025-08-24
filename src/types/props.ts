@@ -6,6 +6,13 @@ export type PokemonDataProps = {
   error?: string | null;
 };
 
+export type InputProps = {
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClick: () => Promise<void>;
+  isLoading: boolean;
+};
+
 export type CardProps = {
   name: string;
   abilities: string;
