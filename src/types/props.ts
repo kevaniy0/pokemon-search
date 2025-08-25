@@ -1,9 +1,10 @@
 import type { Pokemon } from './pokemon';
+import type { AppError } from './pokemon';
 
 export type PokemonDataProps = {
   results: Pokemon[];
   isLoading?: boolean;
-  error?: string | null;
+  error?: AppError | null;
 };
 
 export type InputProps = {

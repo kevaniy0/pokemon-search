@@ -9,6 +9,12 @@ export type Pokemon = {
   types: PokemonType[];
 };
 
+export type AppError = {
+  status: number;
+  message: string;
+  source: 'http' | 'unexpected';
+};
+
 export type PokemonType = {
   type: {
     name: string;
