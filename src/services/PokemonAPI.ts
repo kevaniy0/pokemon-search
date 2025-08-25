@@ -1,4 +1,5 @@
 import type { Pokemon } from '../types/pokemon';
+import HttpError from './HttpError';
 class PokemonAPI {
   private baseUrl = 'https://pokeapi.co/api/v2/pokemon';
 
@@ -8,7 +9,7 @@ class PokemonAPI {
     const response = await fetch(url);
 
     if (!response.ok) {
-      throw new Error(`Pokemon not found: ${response.status}`);
+      throw new HttpError(response.status, 'Pokemon not found');
     }
     return await response.json();
   }

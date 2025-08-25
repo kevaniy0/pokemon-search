@@ -2,16 +2,17 @@ import React from 'react';
 import './App.css';
 import PokemonAPI from './services/PokemonAPI';
 import type { Pokemon } from './types/pokemon';
+import type { AppError } from './types/pokemon';
 import TopControls from './views/TopControls';
 import Results from './views/Results';
 import Button from './components/Button';
 import getDelay from './utils/getDelay';
-// import Loader from './components/Loader';
+import HttpError from './services/HttpError';
 
 type AppState = {
   searchItem: string;
   results: Pokemon[];
-  error: string | null;
+  error: AppError | null;
   isLoading: boolean;
 };
 
@@ -44,6 +45,7 @@ class App extends React.Component {
     const startLoadingTime = Date.now();
     try {
       const pokemon = await this.api.getPokemon(value);
+
       const checkedHistory = history.filter(
         (item) => item.name !== pokemon.name
       );
@@ -60,12 +62,29 @@ class App extends React.Component {
       }, delay);
     } catch (error) {
       const delay = getDelay(startLoadingTime);
-      setTimeout(() => {
-        this.setState({
-          error: (error as Error).message,
-          isLoading: false,
-        });
-      }, delay);
+      if (error instanceof HttpError) {
+        setTimeout(() => {
+          this.setState({
+            error: {
+              status: error.status,
+              message: error.message,
+              source: 'http',
+            },
+            isLoading: false,
+          });
+        }, delay);
+      } else {
+        setTimeout(() => {
+          this.setState({
+            error: {
+              status: 500,
+              message: 'Unexpected error',
+              source: 'unexpected',
+            },
+            isLoading: false,
+          });
+        }, delay);
+      }
     }
   };
 
@@ -86,12 +105,9 @@ class App extends React.Component {
           value={searchItem}
           onChange={this.handleInput}
           onClick={this.handleSearch}
-        />
-        <Results
-          results={results}
-          isLoading={this.state.isLoading}
           error={this.state.error}
         />
+        <Results results={results} isLoading={this.state.isLoading} />
         <Button
           name="Error"
           className={[
