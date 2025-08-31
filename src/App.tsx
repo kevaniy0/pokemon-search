@@ -5,32 +5,50 @@ import type { Pokemon } from './types/pokemon';
 import type { AppError } from './types/pokemon';
 import TopControls from './views/TopControls';
 import Results from './views/Results';
+import ErrorBoundary from './components/ErrorBoundary';
 import Button from './components/Button';
 import getDelay from './utils/getDelay';
 import HttpError from './services/HttpError';
+import errorImg from './assets/error2.png';
 
 type AppState = {
   searchItem: string;
+  inputValue: string;
   results: Pokemon[];
   error: AppError | null;
   isLoading: boolean;
+  forceError: boolean;
 };
 
 class App extends React.Component {
   private api = new PokemonAPI();
 
   state: AppState = {
+    inputValue: '',
     searchItem: '',
     results: [],
     error: null,
     isLoading: false,
+    forceError: false,
   };
 
   handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ searchItem: e.target.value });
   };
 
+  handleForceError = () => {
+    this.setState({ forceError: true });
+  };
+
+  clearForceError = () => {
+    this.setState({ forceError: false });
+  };
+
   handleSearch = async () => {
+    this.clearForceError();
+    this.setState({
+      inputValue: this.state.searchItem,
+    });
     const value = this.state.searchItem.trim();
     if (value === '') return;
 
@@ -107,8 +125,33 @@ class App extends React.Component {
           onClick={this.handleSearch}
           error={this.state.error}
         />
-        <Results results={results} isLoading={this.state.isLoading} />
+        <ErrorBoundary
+          key={this.state.inputValue}
+          fallback={
+            <div className="flex flex-col items-center mt-20 mb-20 text-gray-600 gap-10">
+              <h2 className="text-2xl font-medium">
+                Ooops, something went wrong
+              </h2>
+              <div
+                className="flex w-60 h-60"
+                style={{
+                  backgroundImage: `url(${errorImg})`,
+                  backgroundSize: 'contain',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center',
+                }}
+              ></div>
+            </div>
+          }
+        >
+          <Results
+            results={results}
+            isLoading={this.state.isLoading}
+            forceError={this.state.forceError}
+          />
+        </ErrorBoundary>
         <Button
+          onClick={this.handleForceError}
           name="Error"
           className={[
             'error-btn',
