@@ -1,3 +1,4 @@
+import type { ReactElement, ReactNode } from 'react';
 import type { Pokemon } from './pokemon';
 import type { AppError } from './pokemon';
 
@@ -5,6 +6,7 @@ export type PokemonDataProps = {
   results: Pokemon[];
   isLoading?: boolean;
   error?: AppError | null;
+  forceError?: boolean;
 };
 
 export type InputProps = {
@@ -21,4 +23,13 @@ export type CardProps = {
   type: string;
   height: number;
   weight: number;
+};
+
+type FallbackError = {
+  resetError?: () => void;
+};
+
+export type ErrorBoundaryProps = {
+  children: ReactNode;
+  fallback: ReactElement<FallbackError>;
 };
