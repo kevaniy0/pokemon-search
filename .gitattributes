@@ -1,2 +1,6 @@
 # Всегда использовать LF
 * text eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary

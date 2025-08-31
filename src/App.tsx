@@ -9,7 +9,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import Button from './components/Button';
 import getDelay from './utils/getDelay';
 import HttpError from './services/HttpError';
-import errorImg from './assets/error2.png';
+import errorImg from './assets/error2.jpg';
 import extractData from './utils/extractData';
 
 type AppState = {
