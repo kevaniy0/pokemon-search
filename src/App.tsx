@@ -5,12 +5,15 @@ import type { Pokemon } from './types/pokemon';
 import type { AppError } from './types/pokemon';
 import TopControls from './views/TopControls';
 import Results from './views/Results';
+import Footer from './components/Footer';
 import ErrorBoundary from './components/ErrorBoundary';
 import Button from './components/Button';
 import getDelay from './utils/getDelay';
 import HttpError from './services/HttpError';
 import errorImg from './assets/error2.jpg';
+import logo from './assets/Github-desktop-logo-symbol.svg.png';
 import extractData from './utils/extractData';
+import { githubLink } from './components/Footer/footer-data';
 
 type AppState = {
   searchItem: string;
@@ -175,6 +178,7 @@ class App extends React.Component {
             'mb-5',
           ]}
         />
+        <Footer link={githubLink} image={logo} />
       </div>
     );
   }
