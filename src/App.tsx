@@ -10,6 +10,7 @@ import Button from './components/Button';
 import getDelay from './utils/getDelay';
 import HttpError from './services/HttpError';
 import errorImg from './assets/error2.png';
+import extractData from './utils/extractData';
 
 type AppState = {
   searchItem: string;
@@ -63,11 +64,9 @@ class App extends React.Component {
     const startLoadingTime = Date.now();
     try {
       const pokemon = await this.api.getPokemon(value);
-
-      const checkedHistory = history.filter(
-        (item) => item.name !== pokemon.name
-      );
-      const newHistory = [pokemon, ...checkedHistory];
+      const data = extractData(pokemon);
+      const checkedHistory = history.filter((item) => item.name !== data.name);
+      const newHistory = [data, ...checkedHistory];
       const delay = getDelay(startLoadingTime);
       setTimeout(() => {
         this.setState({
