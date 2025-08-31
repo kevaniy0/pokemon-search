@@ -25,11 +25,12 @@ export type CardProps = {
   weight: number;
 };
 
-type FallbackError = {
-  resetError?: () => void;
-};
-
 export type ErrorBoundaryProps = {
   children: ReactNode;
-  fallback: ReactElement<FallbackError>;
+  fallback: ReactElement;
+};
+
+export type FooterProps = {
+  link: string;
+  image: string;
 };
