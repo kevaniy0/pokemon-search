@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import PokemonAPI from './services/PokemonAPI';
 import type { Pokemon } from './types/pokemon';
 import type { AppError } from './types/pokemon';
@@ -119,7 +118,7 @@ class App extends React.Component {
   render() {
     const { searchItem, results } = this.state;
     return (
-      <div className="container mx-auto">
+      <div className="container mx-auto flex flex-col h-[100vh]">
         <TopControls
           isLoading={this.state.isLoading}
           value={searchItem}
@@ -130,7 +129,7 @@ class App extends React.Component {
         <ErrorBoundary
           key={this.state.inputValue}
           fallback={
-            <div className="flex flex-col items-center mt-20 mb-20 text-gray-600 gap-10">
+            <div className="flex flex-1 flex-col items-center mt-20 mb-20 text-gray-600 gap-10">
               <h2 className="text-2xl font-medium">
                 Ooops, something went wrong
               </h2>
