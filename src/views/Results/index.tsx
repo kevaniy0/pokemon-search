@@ -13,7 +13,7 @@ class Results extends React.Component<PokemonDataProps> {
     }
 
     return (
-      <section>
+      <section className="flex-1">
         <h2 className="text-3xl font-bold text-center my-6 text-gray-600">
           {SectionTitle}
         </h2>

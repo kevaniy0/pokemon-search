@@ -4,7 +4,7 @@ import type { FooterProps } from '../../types/props';
 class Footer extends React.Component<FooterProps> {
   render() {
     return (
-      <footer className="flex justify-center items-center gap-5 mt-10 mb-5">
+      <footer className="flex justify-center items-center gap-5 pb-1">
         <div className="font-medium  text-gray-600">© 2025</div>
         <a
           className="block w-[32px] h-[32px]"
