@@ -6,6 +6,5 @@ describe('Button', () => {
     render(<Button name="Search" className={['btn']} />);
     const button = screen.getByRole('button', { name: /search/i });
     expect(button).toBeInTheDocument();
-    screen.debug();
   });
 });

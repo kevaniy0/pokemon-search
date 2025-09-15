@@ -5,6 +5,5 @@ describe('Input', () => {
     render(<Input />);
     const input = screen.getByPlaceholderText(/type a pokemon name/i);
     expect(input).toBeInTheDocument();
-    screen.debug();
   });
 });
