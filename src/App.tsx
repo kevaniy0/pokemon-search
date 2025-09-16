@@ -55,6 +55,8 @@ class App extends React.Component {
     const value = this.state.searchItem.trim();
     if (value === '') return;
 
+    localStorage.setItem('searchItem', value);
+
     this.setState({
       isLoading: true,
     });
@@ -70,38 +72,28 @@ class App extends React.Component {
       const checkedHistory = history.filter((item) => item.name !== data.name);
       const newHistory = [data, ...checkedHistory];
       const delay = getDelay(startLoadingTime);
+      localStorage.setItem('searchHistory', JSON.stringify(newHistory));
       setTimeout(() => {
-        this.setState(
-          {
-            searchItem: value,
-            results: newHistory,
-            isLoading: false,
-            error: null,
-          },
-          () => {
-            localStorage.setItem('searchHistory', JSON.stringify(newHistory));
-            localStorage.setItem('searchItem', this.state.searchItem);
-          }
-        );
+        this.setState({
+          searchItem: value,
+          results: newHistory,
+          isLoading: false,
+          error: null,
+        });
       }, delay);
     } catch (error) {
       const delay = getDelay(startLoadingTime);
       if (error instanceof HttpError) {
         setTimeout(() => {
-          this.setState(
-            {
-              searchItem: value,
-              error: {
-                status: error.status,
-                message: error.message,
-                source: 'http',
-              },
-              isLoading: false,
+          this.setState({
+            searchItem: value,
+            error: {
+              status: error.status,
+              message: error.message,
+              source: 'http',
             },
-            () => {
-              localStorage.setItem('searchItem', this.state.searchItem);
-            }
-          );
+            isLoading: false,
+          });
         }, delay);
       } else {
         setTimeout(() => {

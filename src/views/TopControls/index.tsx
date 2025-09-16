@@ -47,7 +47,8 @@ class TopControls extends React.Component<InputProps & SearchError> {
             name="Search"
             onClick={this.props.onClick}
           ></Button>
-          {this.props.error?.status === 404 && (
+          {(this.props.error?.status === 404 ||
+            this.props.error?.status === 400) && (
             <div className="font-bold text-red-500 absolute top-10 left-1/2 -translate-x-1/2">
               {this.props.error.message}
             </div>
