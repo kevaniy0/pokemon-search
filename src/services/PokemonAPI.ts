@@ -9,8 +9,18 @@ class PokemonAPI {
     const response = await fetch(url);
 
     if (!response.ok) {
-      throw new HttpError(response.status, 'Pokemon not found');
+      if (response.status === 404) {
+        throw new HttpError(response.status, 'Pokemon not found');
+      }
+      if (response.status === 400) {
+        throw new HttpError(response.status, 'Bad Request');
+      }
+      throw new HttpError(
+        response.status,
+        response.statusText || 'Unknown Error'
+      );
     }
+
     return await response.json();
   }
 }
