@@ -3,6 +3,7 @@ import App from 'src/App';
 import { mockPokemon } from 'tests/__mocks__/pokemon';
 import userEvent from '@testing-library/user-event';
 import PokemonAPI from 'src/services/PokemonAPI';
+import type { Pokemon } from 'src/types/pokemon';
 
 describe('App', () => {
   beforeEach(() => {
@@ -79,5 +80,37 @@ describe('App', () => {
 
     expect(getPokemonMock).toHaveBeenCalledTimes(1);
     expect(getPokemonMock).toHaveBeenCalledWith(mockPokemon.name);
+  });
+  it('should retrieve saved search term on component mount', async () => {
+    localStorage.setItem('searchHistory', JSON.stringify([mockPokemon]));
+    localStorage.setItem('searchItem', mockPokemon.name);
+    render(<App />);
+
+    const input = await screen.findByDisplayValue(mockPokemon.name);
+    expect(input).toBeInTheDocument();
+  });
+  it('should overwrites existing localStorage value when new search is performed', async () => {
+    const oldPokemon = { ...mockPokemon };
+    const pokemonName = 'pikachu';
+    oldPokemon.name = pokemonName;
+    localStorage.setItem('searchHistory', JSON.stringify([oldPokemon]));
+    localStorage.setItem('searchItem', pokemonName);
+    render(<App />);
+
+    const user = userEvent.setup();
+
+    const input = screen.getByPlaceholderText(/type a pokemon name/i);
+    const button = screen.getByRole('button', { name: /search/i });
+
+    await user.clear(input);
+    await user.type(input, mockPokemon.name);
+    await user.click(button);
+
+    expect(localStorage.getItem('searchItem')).toBe(mockPokemon.name);
+    const history: Pokemon[] = JSON.parse(
+      localStorage.getItem('searchHistory') || '[]'
+    );
+    expect(history.length).toBeGreaterThan(1);
+    expect(history[0].name).toBe(mockPokemon.name);
   });
 });
