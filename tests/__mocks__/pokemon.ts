@@ -1,5 +1,4 @@
 import type { Pokemon } from '../../src/types/pokemon';
-
 export const mockPokemon: Pokemon = {
   abilities: [
     {
