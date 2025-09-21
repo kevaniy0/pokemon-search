@@ -14,6 +14,12 @@ The project allows searching for Pokémon and displaying their characteristics, 
 - Artificial error generation to test ErrorBoundary. (click on the Error button)
 - Responsive design using **Tailwind CSS**.
 
+## 🧪 Testing & Coverage
+
+- Full project coverage in the `unit-testing` branch using **Vitest** and **React Testing Library**.
+
+- 24 tests across 8 files, including unit and integration tests for components, API calls, loading states, error handling, and localStorage.
+
 ## ⚙️ Technologies
 
 - **React** (class components)
@@ -23,6 +29,7 @@ The project allows searching for Pokémon and displaying their characteristics, 
 - **GitHub Pages** (deployment)
 - **localStorage** (saving search history)
 - **Eslint**, **Prettier**, **Husky** (code quality and formatting)
+- **Vitest**, **React Testing Library** (testing)
 
 ## 📸 Screenshots
 
