@@ -113,4 +113,15 @@ describe('App', () => {
     expect(history.length).toBeGreaterThan(1);
     expect(history[0].name).toBe(mockPokemon.name);
   });
+  it('should throw error and display fallbackUI when error button is clicked', async () => {
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    render(<App />);
+    const user = userEvent.setup();
+    const button = screen.getByRole('button', { name: /Error/i });
+    await user.click(button);
+    const fallbackUI = screen.getByText(/Ooops, something went wrong/i);
+    expect(fallbackUI).toBeInTheDocument();
+    expect(consoleSpy).toHaveBeenCalled();
+    consoleSpy.mockRestore();
+  });
 });
