@@ -18,6 +18,7 @@ export default defineConfig({
         'src/**/*.spec.{js,jsx,ts,tsx}',
         'src/main.tsx',
         'src/utils',
+        'src/store',
         'src/types',
         'src/index.{js,jsx,ts,tsx}',
         'src/setupTests.{js,ts}',
