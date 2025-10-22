@@ -16,6 +16,13 @@ export type InputProps = {
   isLoading: boolean;
 };
 
+export type ButtonProps = {
+  onClick?: () => void;
+  name: string;
+  className: string[];
+  disabled?: boolean;
+};
+
 export type CardProps = {
   name: string;
   abilities: string;
@@ -34,3 +41,9 @@ export type FooterProps = {
   link: string;
   image: string;
 };
+
+type SearchError = {
+  error: AppError | null;
+};
+
+export type TopControlsProps = InputProps & SearchError;

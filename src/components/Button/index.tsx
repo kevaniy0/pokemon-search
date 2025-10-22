@@ -1,25 +1,17 @@
-import React from 'react';
 import './index.scss';
+import type { ButtonProps } from '../../types/props';
 
-type ButtonProps = {
-  onClick?: () => void;
-  name: string;
-  className: string[];
-  disabled?: boolean;
+const Button = (props: ButtonProps) => {
+  const classes = props.className.join(' ') ?? [];
+  return (
+    <button
+      onClick={props.onClick}
+      disabled={props.disabled}
+      className={classes}
+    >
+      {props.name}
+    </button>
+  );
 };
 
-class Button extends React.Component<ButtonProps> {
-  render() {
-    const classes = this.props.className.join(' ') ?? [];
-    return (
-      <button
-        onClick={this.props.onClick}
-        disabled={this.props.disabled}
-        className={classes}
-      >
-        {this.props.name}
-      </button>
-    );
-  }
-}
 export default Button;
