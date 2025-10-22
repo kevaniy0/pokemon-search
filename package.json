@@ -1,9 +1,9 @@
 {
-  "name": "class-components",
+  "name": "pokemon-search",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://kevaniy0.github.io/react-class-components",
+  "homepage": "https://kevaniy0.github.io/pokemon-search",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
