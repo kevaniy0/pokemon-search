@@ -6,7 +6,6 @@ import TopControls from './views/TopControls';
 import Results from './views/Results';
 import Footer from './components/Footer';
 import ErrorBoundary from './components/ErrorBoundary';
-import Button from './components/Button';
 import getDelay from './utils/getDelay';
 import HttpError from './services/HttpError';
 import errorImg from './assets/error2.jpg';
@@ -45,9 +44,6 @@ const App = () => {
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState((prev) => ({ ...prev, searchItem: e.target.value }));
-  };
-  const handleForceError = () => {
-    setState((prev) => ({ ...prev, forceError: true }));
   };
 
   const clearForceError = () => {
@@ -149,32 +145,7 @@ const App = () => {
           forceError={state.forceError}
         />
       </ErrorBoundary>
-      <Button
-        onClick={handleForceError}
-        name="Error"
-        className={[
-          'error-btn',
-          'btn',
-          'text-gray-600',
-          'bg-white',
-          'font-medium',
-          'cursor-pointer',
-          'border-2',
-          'border-gray-600',
-          'rounded',
-          'transition-colors',
-          'duration-300',
-          'p-1',
-          'hover:bg-black',
-          'hover:text-white',
-          'hover:border-black',
-          'block',
-          'w-max',
-          'm-auto',
-          'mt-5',
-          'mb-5',
-        ]}
-      />
+
       <Footer link={githubLink} image={logo} />
     </div>
   );
