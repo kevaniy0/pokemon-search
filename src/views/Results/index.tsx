@@ -11,7 +11,7 @@ const Results = (props: PokemonDataProps) => {
   }
 
   return (
-    <section className="flex-1">
+    <section className="flex-1 mb-2.5">
       <h2 className="text-3xl font-bold text-center my-6 text-gray-600">
         {SectionTitle}
       </h2>
