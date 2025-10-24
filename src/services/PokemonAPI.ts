@@ -1,8 +1,8 @@
-import type { Pokemon } from '../types/pokemon';
+import type { Data } from '../types/pokemon';
 import HttpError from './HttpError';
 
 const baseUrl = 'https://pokeapi.co/api/v2/pokemon';
-const getPokemon = async (name: string): Promise<Pokemon> => {
+const getPokemon = async (name: string): Promise<Data> => {
   const correctName = name.toLowerCase().trim();
   const url = `${baseUrl}/${correctName}`;
   const response = await fetch(url);
