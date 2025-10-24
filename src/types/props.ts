@@ -17,6 +17,7 @@ export type InputProps = {
 };
 
 export type ButtonProps = {
+  element?: ReactElement;
   onClick?: () => void;
   name: string;
   className: string[];
@@ -25,11 +26,18 @@ export type ButtonProps = {
 
 export type CardProps = {
   name: string;
-  // abilities: string;
   pic: string;
-  // type: string;
-  // height: number;
-  // weight: number;
+  onClick: () => void;
+};
+
+export type CardDesciption = {
+  onClick: () => void;
+  name: string;
+  abilities: string;
+  pic: string;
+  type: string;
+  height: number;
+  weight: number;
 };
 
 export type ErrorBoundaryProps = {

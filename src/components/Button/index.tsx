@@ -10,6 +10,7 @@ const Button = (props: ButtonProps) => {
       className={classes}
     >
       {props.name}
+      {props.element ? props.element : ''}
     </button>
   );
 };

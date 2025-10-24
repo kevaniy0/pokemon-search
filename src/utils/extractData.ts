@@ -1,14 +1,14 @@
-import type { Pokemon } from '../types/pokemon';
+import type { Data, Pokemon } from '../types/pokemon';
 
-const extractData = (data: Pokemon): Pokemon => {
+const extractData = (data: Data): Pokemon => {
+  const pic = data.sprites.other.dream_world.front_default;
+  console.log(pic);
   return {
     abilities: data.abilities,
     name: data.name,
     height: data.height,
     weight: data.weight,
-    sprites: {
-      front_default: data.sprites.front_default,
-    },
+    pic: pic,
     types: data.types,
   };
 };
