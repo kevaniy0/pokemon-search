@@ -14,42 +14,13 @@ const CardList = (props: PokemonDataProps) => {
     <div
       className={`cards-wrapper font-medium text-gray-600 ${isLoading ? 'opacity-20' : 'opacity-100'}`}
     >
-      <div className="card-item flex">
-        <div className="flex flex-1 h-20 justify-center items-center border border-black font-bold ">
-          name
-        </div>
-        <div className="flex flex-1 h-20 justify-center items-center border-t border-r border-b border-black font-bold ">
-          abilities
-        </div>
-        <div className="flex flex-1 h-20 justify-center items-center border-t border-r border-b border-black font-bold ">
-          type
-        </div>
-        <div className="flex flex-1 h-20 justify-center items-center border-t border-r border-b border-black font-bold ">
-          height
-        </div>
-        <div className="flex flex-1 h-20 justify-center items-center border-t border-r border-b border-black font-bold ">
-          weight
-        </div>
-        <div className="flex flex-1 h-20 justify-center items-center border-t border-r border-b border-black font-bold ">
-          image
-        </div>
-      </div>
-      {results.map((item) => {
-        const abilities = item.abilities
-          .map((value) => value.ability.name)
-          .join(', ');
-        return (
-          <Card
-            key={item.name}
-            name={item.name}
-            abilities={abilities}
-            type={item.types[0].type.name}
-            pic={item.sprites.front_default}
-            height={item.height}
-            weight={item.weight}
-          ></Card>
-        );
-      })}
+      <ul className="grid grid-cols-3 gap-7 justify-items-center w-max mx-auto">
+        {results.map((item) => (
+          <li className="flex flex-col items-center w-max" key={item.name}>
+            <Card name={item.name} pic={item.sprites.front_default} />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
