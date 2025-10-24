@@ -1,6 +1,6 @@
 import type { CardDesciption } from '../../types/props';
 import Button from '../Button';
-import CloseButton from '../../assets/close_card.svg';
+import CloseButton from 'assets/close_card.svg';
 
 const CardDescription = (props: CardDesciption) => {
   return (

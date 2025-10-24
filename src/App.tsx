@@ -9,7 +9,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import getDelay from './utils/getDelay';
 import HttpError from './services/HttpError';
 import errorImg from './assets/error2.jpg';
-import logo from './assets/Github-desktop-logo-symbol.svg.png';
+import logo from 'assets/Github-desktop-logo-symbol.svg.png';
 import extractData from './utils/extractData';
 import { githubLink } from './components/Footer/footer-data';
 
