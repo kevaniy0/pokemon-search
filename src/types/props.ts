@@ -25,11 +25,11 @@ export type ButtonProps = {
 
 export type CardProps = {
   name: string;
-  abilities: string;
+  // abilities: string;
   pic: string;
-  type: string;
-  height: number;
-  weight: number;
+  // type: string;
+  // height: number;
+  // weight: number;
 };
 
 export type ErrorBoundaryProps = {
