@@ -53,5 +53,12 @@ export type FooterProps = {
 type SearchError = {
   error: AppError | null;
 };
-
+export type HomePageState = {
+  searchItem: string;
+  inputValue: string;
+  results: Pokemon[];
+  error: AppError | null;
+  isLoading: boolean;
+  forceError: boolean;
+};
 export type TopControlsProps = InputProps & SearchError;
