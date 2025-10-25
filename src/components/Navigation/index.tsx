@@ -2,14 +2,14 @@ import { NavLink } from 'react-router';
 
 const Navigation = () => {
   const baseClasses =
-    'px-3 py-2 rounded-xl font-medium transition-colors duration-300';
-  const activeClasses = 'bg-blue-600 text-white shadow-md';
-  const inactiveClasses =
-    'bg-transparent text-blue-600 hover:bg-blue-100 hover:text-blue-800';
+    'px-4 py-2 rounded-md text-lg font-semibold transition-colors duration-200';
+
+  const activeClasses = 'bg-gray-900 text-white shadow-md';
+  const inactiveClasses = 'text-gray-800 hover:bg-gray-100';
   return (
-    <div className="navigation-container flex gap-2">
+    <div className="navigation-container flex gap-2 justify-center">
       <NavLink
-        to="/"
+        to="/home"
         className={({ isActive }) =>
           `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`
         }

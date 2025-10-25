@@ -4,7 +4,7 @@ import CloseButton from 'assets/close_card.svg';
 
 const CardDescription = (props: CardDesciption) => {
   return (
-    <div className="card-description rounded-2xl border-2 p-4 w-[30%] relative">
+    <div className="card-description rounded-2xl border-2 text-gray-900 p-4 w-[30%] relative">
       <div className="flex flex-col h-[100%]">
         <div className="flex h-1/2 justify-center">
           <img

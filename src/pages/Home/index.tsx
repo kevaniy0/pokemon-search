@@ -99,7 +99,7 @@ const HomePage = () => {
     }
   };
   return (
-    <div className="container mx-auto flex flex-col h-[100vh]">
+    <div className="flex flex-col h-[100%]">
       <TopControls
         isLoading={state.isLoading}
         value={state.searchItem}

@@ -4,18 +4,13 @@ import Input from '../../components/Input';
 import Loader from '../../components/Loader';
 import type { TopControlsProps } from '../../types/props';
 
-const SectionTitle = 'Top Controls';
-
 const TopControls = (props: TopControlsProps) => {
   return (
-    <section>
-      <h2 className="text-3xl font-bold text-gray-600 text-center my-6">
-        {SectionTitle}
-      </h2>
+    <section className="top-cotrols-section">
       <div className="relative top-container flex justify-center gap-x-4 flex-wrap ">
         {props.isLoading && <Loader />}
         <Input
-          className="outline-0 border-2 rounded px-1 text-gray-600 font-medium  focus:border-3"
+          className="outline-0 border-2 rounded px-1 text-gray-900 font-medium  focus:border-3"
           type="text"
           value={props.value}
           onChange={props.onChange}
@@ -25,12 +20,12 @@ const TopControls = (props: TopControlsProps) => {
           className={[
             'search-btn',
             'btn',
-            'text-gray-600',
+            'text-gray-900',
             'bg-white',
             'font-medium',
             'cursor-pointer',
             'border-2',
-            'border-gray-600',
+            'border-gray-900',
             'rounded',
             'transition-colors',
             'duration-300',

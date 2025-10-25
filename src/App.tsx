@@ -7,17 +7,17 @@ import logo from 'assets/Github-desktop-logo-symbol.svg.png';
 
 const App = () => {
   return (
-    <>
+    <div className="container mx-auto flex flex-col h-[100vh]">
       <Header />
-      <main>
+      <main className="flex flex-col flex-1 items-center">
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/home" element={<HomePage />} />
           {/* <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} /> */}
         </Routes>
       </main>
       <Footer link={githubLink} image={logo} />
-    </>
+    </div>
   );
 };
 
