@@ -1,16 +1,23 @@
 import './index.scss';
 import CardList from '../../components/CardList';
-import type { PokemonDataProps } from '../../types/props';
+import type { ResultsProps } from '../../types/props';
+import Pagination from '@/components/Pagination';
 
-const Results = (props: PokemonDataProps) => {
-  const { results } = props;
+const Results = (props: ResultsProps) => {
   if (props.forceError) {
     throw new Error('Искусственная ошибка');
   }
 
   return (
-    <section className="results-section flex flex-1 items-center">
-      <CardList isLoading={props.isLoading} results={results} />
+    <section className="results-section flex flex-1 flex-col items-center gap-y-2.5 justify-center">
+      <div className="card-list-wrapper">
+        <CardList isLoading={props.isLoading} results={props.results} />
+      </div>
+      <Pagination
+        current={props.currentPage}
+        pages={props.totalPages}
+        onChange={props.onChangePage}
+      />
     </section>
   );
 };

@@ -7,8 +7,10 @@ import { useEffect, useState } from 'react';
 import type { Pokemon } from '@/types/pokemon';
 import getPokemon from '@/services/PokemonAPI';
 import extractData from '@/utils/extractData';
+import { validatePokemonData } from '@/utils/validateData';
 import getDelay from '@/utils/getDelay';
 import HttpError from '@/services/HttpError';
+import { useNavigate, useParams } from 'react-router';
 
 const baseState: HomePageState = {
   inputValue: '',
@@ -21,13 +23,50 @@ const baseState: HomePageState = {
 
 const HomePage = () => {
   const [state, setState] = useState(baseState);
-  useEffect(() => {
-    const history = localStorage.getItem('searchHistory');
-    if (!history) return;
+  const { page } = useParams();
+  const navigate = useNavigate();
+  const currentPage = Number(page) || 1;
+  const itemsPerPage = 6;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = state.results.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(state.results.length / itemsPerPage);
 
-    const items: Pokemon[] = JSON.parse(history);
-    const value = localStorage.getItem('searchItem') || '';
-    setState((prev) => ({ ...prev, searchItem: value, results: items }));
+  useEffect(() => {
+    // if (page) {
+    //   const correctPage = Number(page);
+    //   if (!isNaN(correctPage)) {
+    //     console.log('correct');
+    //     navigate(`/home/${correctPage}`);
+    //   } else {
+    //     console.log('not correct');
+    //     navigate(`/home/1`);
+    //   }
+    // } else {
+    //   console.log('to main page or last page');
+    //   const lastPage = localStorage.getItem('pokemonLastPage') || 1;
+    //   navigate(`/home/${lastPage}`);
+    // }
+    const history = localStorage.getItem('searchHistory');
+    const searchItem = localStorage.getItem('searchItem') || '';
+
+    if (!history) return;
+    try {
+      const parsedData: unknown = JSON.parse(history);
+      if (validatePokemonData(parsedData)) {
+        setState((prev) => ({ ...prev, results: parsedData, searchItem }));
+      } else {
+        throw new Error('Invalid Pokemon data format');
+      }
+    } catch (error) {
+      localStorage.removeItem('searchHistory');
+      localStorage.removeItem('searchItem');
+      if (error instanceof Error) {
+        console.error('Failed to parse search history:', error.message);
+      } else {
+        console.error('unknown localstorage error:', error);
+      }
+    }
   }, []);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,6 +75,13 @@ const HomePage = () => {
 
   const clearForceError = () => {
     setState((prev) => ({ ...prev, forceError: false }));
+  };
+
+  const handlePageChange = (page: number) => {
+    console.log('change page');
+
+    localStorage.setItem('pokemonLastPage', String(page));
+    navigate(`/home/${page}`);
   };
   const handleSearch = async () => {
     clearForceError();
@@ -127,9 +173,12 @@ const HomePage = () => {
         }
       >
         <Results
-          results={state.results}
+          results={currentItems}
+          currentPage={Number(page)}
+          totalPages={totalPages}
           isLoading={state.isLoading}
           forceError={state.forceError}
+          onChangePage={handlePageChange}
         />
       </ErrorBoundary>
     </div>

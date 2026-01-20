@@ -1,5 +1,5 @@
 import Header from './components/Header';
-import { Route, Routes } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router';
 import HomePage from './pages/Home';
 import Footer from './components/Footer';
 import { githubLink } from './components/Footer/footer-data';
@@ -12,9 +12,9 @@ const App = () => {
       <Header />
       <main className="flex flex-col flex-1 items-center">
         <Routes>
-          <Route path="/home" element={<HomePage />} />
+          <Route path="/" element={<Navigate to="/home" />} />
+          <Route path="/home/:page?" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
-          {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>
       </main>
       <Footer link={githubLink} image={logo} />

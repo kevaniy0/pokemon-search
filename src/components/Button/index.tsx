@@ -9,8 +9,8 @@ const Button = (props: ButtonProps) => {
       disabled={props.disabled}
       className={classes}
     >
-      {props.name}
       {props.element ? props.element : ''}
+      {props.name}
     </button>
   );
 };
