@@ -1,14 +1,14 @@
 import Navigation from 'components/Navigation';
-import pokemonLogo from 'assets/pokemon-logo.svg';
+import type { HeaderProps } from '@/types/props';
 
-const Header = () => {
+const Header = ({ name, logo }: HeaderProps) => {
   return (
     <header className="mb-7">
       <div className="flex gap-6 justify-center items-center ">
         <h1 className="text-5xl font-black text-gray-900 drop-shadow-lg">
-          Pokémon Search
+          {name}
         </h1>
-        <img className="w-[100px]" src={pokemonLogo} alt="pokemon-logo" />
+        <img className="w-[100px]" src={logo} alt="pokemon-logo" />
       </div>
       <Navigation />
     </header>

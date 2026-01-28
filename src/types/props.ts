@@ -9,6 +9,11 @@ export type PokemonDataProps = {
   forceError?: boolean;
 };
 
+export type HeaderProps = {
+  name: string;
+  logo: string;
+};
+
 export type ResultsProps = PokemonDataProps & {
   onChangePage: (page: number) => void;
   currentPage: number;

@@ -53,6 +53,7 @@ const HomePage = () => {
     if (!history) return;
     try {
       const parsedData: unknown = JSON.parse(history);
+      // !TODO: Узнать название такой проверки
       if (validatePokemonData(parsedData)) {
         setState((prev) => ({ ...prev, results: parsedData, searchItem }));
       } else {
