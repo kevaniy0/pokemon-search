@@ -9,7 +9,7 @@ const root = document.getElementById('root');
 if (root !== null) {
   createRoot(root).render(
     <StrictMode>
-      <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <BrowserRouter>
         <App />
       </BrowserRouter>
     </StrictMode>
