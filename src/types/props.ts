@@ -78,4 +78,5 @@ export type PaginationProps = {
   current: number;
   pages: number;
   onChange: (page: number) => void;
+  empty: boolean;
 };
