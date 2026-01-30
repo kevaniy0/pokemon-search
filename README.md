@@ -3,7 +3,7 @@
 **Pokémon Search** — this is a project built with **React**.  
 The project allows searching for Pokémon and displaying their characteristics, including image, type, and basic stats.
 
-## Deploy - [Link](https://kevaniy0.github.io/pokemon-search/)
+## Deploy - [Link](https://poke-explore.vercel.app)
 
 ## 📝 Features
 
@@ -25,14 +25,14 @@ The project allows searching for Pokémon and displaying their characteristics, 
 - **TypeScript**
 - **Vite** (project bundler)
 - **Tailwind CSS** (styling)
-- **GitHub Pages** (deployment)
+- **Vercel** (deployment)
 - **localStorage** (saving search history)
 - **Eslint**, **Prettier**, **Husky** (code quality and formatting)
 - **Vitest**, **React Testing Library** (testing)
 
 ## 📸 Screenshots
 
-<img src="./src/docs/Screenshot_1.png" alt="Main screen" width="700" />
+<img src="./src/docs/Screenshot_3.png" alt="Main screen" width="700" />
 <img src="./src/docs/Screenshot_2.png" alt="Error" width="700" />
 
 ## 🚀 Installation & Running
