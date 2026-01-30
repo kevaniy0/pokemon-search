@@ -1,9 +1,13 @@
 import type { PaginationProps } from '@/types/props';
-import { btnClasses, currentButton } from './pagination-classes';
+import {
+  btnClasses,
+  currentButton,
+  NotAllowedButton,
+} from './pagination-classes';
 import Button from '../Button';
 
-const Pagination = ({ current, pages, onChange }: PaginationProps) => {
-  if (pages <= 1) return;
+const Pagination = ({ current, pages, onChange, empty }: PaginationProps) => {
+  if (!empty) return null;
 
   const goTo = (page: number) => {
     if (page < 1 || page > pages) return;
@@ -34,7 +38,7 @@ const Pagination = ({ current, pages, onChange }: PaginationProps) => {
   return (
     <div className="pagination-wpapper flex gap-1">
       <Button
-        className={btnClasses}
+        className={current === 1 ? NotAllowedButton : btnClasses}
         onClick={() => goTo(current - 1)}
         disabled={current === 1}
         name="&lt;"
@@ -53,7 +57,7 @@ const Pagination = ({ current, pages, onChange }: PaginationProps) => {
         );
       })}
       <Button
-        className={btnClasses}
+        className={current === pages ? NotAllowedButton : btnClasses}
         onClick={() => goTo(current + 1)}
         disabled={current === pages}
         name="&gt;"

@@ -33,3 +33,10 @@ export const currentButton = [
   'border-black',
   'cursor-auto',
 ];
+
+export const NotAllowedButton = [
+  ...baseBtnClasses,
+  'opacity-50',
+  'cursor-not-allowed',
+  'disabled',
+];

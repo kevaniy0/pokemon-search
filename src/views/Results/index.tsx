@@ -17,6 +17,7 @@ const Results = (props: ResultsProps) => {
         current={props.currentPage}
         pages={props.totalPages}
         onChange={props.onChangePage}
+        empty={!!props.results.length}
       />
     </section>
   );
