@@ -7,8 +7,10 @@ import { useEffect, useState } from 'react';
 import type { Pokemon } from '@/types/pokemon';
 import getPokemon from '@/services/PokemonAPI';
 import extractData from '@/utils/extractData';
+import { validatePokemonData } from '@/utils/validateData';
 import getDelay from '@/utils/getDelay';
 import HttpError from '@/services/HttpError';
+import { Navigate, useNavigate, useParams } from 'react-router';
 
 const baseState: HomePageState = {
   inputValue: '',
@@ -21,14 +23,57 @@ const baseState: HomePageState = {
 
 const HomePage = () => {
   const [state, setState] = useState(baseState);
+  const [isInitialized, setIsInitialized] = useState(false);
+  const { page } = useParams();
+  const navigate = useNavigate();
+
   useEffect(() => {
     const history = localStorage.getItem('searchHistory');
-    if (!history) return;
+    const searchItem = localStorage.getItem('searchItem') || '';
 
-    const items: Pokemon[] = JSON.parse(history);
-    const value = localStorage.getItem('searchItem') || '';
-    setState((prev) => ({ ...prev, searchItem: value, results: items }));
+    if (!history) {
+      setIsInitialized(true);
+      return;
+    }
+    try {
+      const parsedData: unknown = JSON.parse(history);
+      if (validatePokemonData(parsedData)) {
+        setState((prev) => ({ ...prev, results: parsedData, searchItem }));
+      } else {
+        throw new Error('Invalid Pokemon data format');
+      }
+    } catch (error) {
+      localStorage.removeItem('searchHistory');
+      localStorage.removeItem('searchItem');
+      if (error instanceof Error) {
+        console.error('Failed to parse search history:', error.message);
+      } else {
+        console.error('unknown localstorage error:', error);
+      }
+    } finally {
+      setIsInitialized(true);
+    }
   }, []);
+
+  if (!isInitialized) return null;
+
+  const correctPage = Number(page);
+  if (!correctPage || isNaN(correctPage) || correctPage < 1) {
+    return <Navigate to="/home/1" replace />;
+  }
+
+  const itemsPerPage = 6;
+  const startIndex = (correctPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = state.results.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(state.results.length / itemsPerPage);
+
+  if (isInitialized && state.results.length === 0 && correctPage !== 1) {
+    return <Navigate to="/home/1" replace />;
+  }
+  if (isInitialized && state.results.length > 0 && correctPage > totalPages) {
+    return <Navigate to={`/home/${totalPages}`} replace />;
+  }
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState((prev) => ({ ...prev, searchItem: e.target.value }));
@@ -36,6 +81,13 @@ const HomePage = () => {
 
   const clearForceError = () => {
     setState((prev) => ({ ...prev, forceError: false }));
+  };
+
+  const handlePageChange = (page: number) => {
+    console.log('change page');
+
+    localStorage.setItem('pokemonLastPage', String(page));
+    navigate(`/home/${page}`);
   };
   const handleSearch = async () => {
     clearForceError();
@@ -67,6 +119,7 @@ const HomePage = () => {
           isLoading: false,
           error: null,
         }));
+        handlePageChange(1);
       }, delay);
     } catch (error) {
       const delay = getDelay(startLoadingTime);
@@ -127,9 +180,12 @@ const HomePage = () => {
         }
       >
         <Results
-          results={state.results}
+          results={currentItems}
+          currentPage={Number(page)}
+          totalPages={totalPages}
           isLoading={state.isLoading}
           forceError={state.forceError}
+          onChangePage={handlePageChange}
         />
       </ErrorBoundary>
     </div>

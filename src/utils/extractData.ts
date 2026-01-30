@@ -2,7 +2,6 @@ import type { Data, Pokemon } from '../types/pokemon';
 
 const extractData = (data: Data): Pokemon => {
   const pic = data.sprites.other.dream_world.front_default;
-  console.log(pic);
   return {
     abilities: data.abilities,
     name: data.name,

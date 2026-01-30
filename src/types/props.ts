@@ -9,6 +9,17 @@ export type PokemonDataProps = {
   forceError?: boolean;
 };
 
+export type HeaderProps = {
+  name: string;
+  logo: string;
+};
+
+export type ResultsProps = PokemonDataProps & {
+  onChangePage: (page: number) => void;
+  currentPage: number;
+  totalPages: number;
+};
+
 export type InputProps = {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -19,7 +30,7 @@ export type InputProps = {
 export type ButtonProps = {
   element?: ReactElement;
   onClick?: () => void;
-  name: string;
+  name?: string;
   className: string[];
   disabled?: boolean;
 };
@@ -62,3 +73,9 @@ export type HomePageState = {
   forceError: boolean;
 };
 export type TopControlsProps = InputProps & SearchError;
+
+export type PaginationProps = {
+  current: number;
+  pages: number;
+  onChange: (page: number) => void;
+};
