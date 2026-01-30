@@ -13,9 +13,9 @@ const App = () => {
       <Header name="Pokémon Search" logo={pokemonLogo} />
       <main className="flex flex-col flex-1 items-center">
         <Routes>
-          <Route path="/" element={<Navigate to="/home/1" replace />} />
-          <Route path="/home" element={<Navigate to="/home/1" replace />} />
-          <Route path="/home/:page?" element={<HomePage />} />
+          <Route path="/" element={<Navigate to="/home" replace />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/home/:page" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
         </Routes>
       </main>

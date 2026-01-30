@@ -10,7 +10,7 @@ import extractData from '@/utils/extractData';
 import { validatePokemonData } from '@/utils/validateData';
 import getDelay from '@/utils/getDelay';
 import HttpError from '@/services/HttpError';
-import { useNavigate, useParams } from 'react-router';
+import { Navigate, useNavigate, useParams } from 'react-router';
 
 const baseState: HomePageState = {
   inputValue: '',
@@ -23,37 +23,20 @@ const baseState: HomePageState = {
 
 const HomePage = () => {
   const [state, setState] = useState(baseState);
+  const [isInitialized, setIsInitialized] = useState(false);
   const { page } = useParams();
   const navigate = useNavigate();
-  const currentPage = Number(page) || 1;
-  const itemsPerPage = 6;
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentItems = state.results.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(state.results.length / itemsPerPage);
 
   useEffect(() => {
-    // if (page) {
-    //   const correctPage = Number(page);
-    //   if (!isNaN(correctPage)) {
-    //     console.log('correct');
-    //     navigate(`/home/${correctPage}`);
-    //   } else {
-    //     console.log('not correct');
-    //     navigate(`/home/1`);
-    //   }
-    // } else {
-    //   console.log('to main page or last page');
-    //   const lastPage = localStorage.getItem('pokemonLastPage') || 1;
-    //   navigate(`/home/${lastPage}`);
-    // }
     const history = localStorage.getItem('searchHistory');
     const searchItem = localStorage.getItem('searchItem') || '';
 
-    if (!history) return;
+    if (!history) {
+      setIsInitialized(true);
+      return;
+    }
     try {
       const parsedData: unknown = JSON.parse(history);
-      // !TODO: Узнать название такой проверки
       if (validatePokemonData(parsedData)) {
         setState((prev) => ({ ...prev, results: parsedData, searchItem }));
       } else {
@@ -67,8 +50,35 @@ const HomePage = () => {
       } else {
         console.error('unknown localstorage error:', error);
       }
+    } finally {
+      setIsInitialized(true);
     }
   }, []);
+  useEffect(() => {
+    if (page) return;
+    const lastPage = localStorage.getItem('pokemonLastPage') || 1;
+    navigate(`/home/${lastPage}`, { replace: true });
+  }, [page, navigate]);
+
+  if (!isInitialized || !page) return null;
+
+  const correctPage = Number(page);
+  if (!correctPage || isNaN(correctPage) || correctPage < 1) {
+    return <Navigate to="/home/1" replace />;
+  }
+
+  const itemsPerPage = 6;
+  const startIndex = (correctPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = state.results.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(state.results.length / itemsPerPage);
+
+  if (isInitialized && state.results.length === 0 && correctPage !== 1) {
+    return <Navigate to="/home/1" replace />;
+  }
+  if (isInitialized && state.results.length > 0 && correctPage > totalPages) {
+    return <Navigate to={`/home/${totalPages}`} replace />;
+  }
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState((prev) => ({ ...prev, searchItem: e.target.value }));
@@ -114,6 +124,7 @@ const HomePage = () => {
           isLoading: false,
           error: null,
         }));
+        handlePageChange(1);
       }, delay);
     } catch (error) {
       const delay = getDelay(startLoadingTime);
