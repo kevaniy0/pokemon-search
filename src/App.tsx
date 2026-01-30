@@ -6,6 +6,7 @@ import { githubLink } from './components/Footer/footer-data';
 import logo from 'assets/Github-desktop-logo-symbol.svg.png';
 import pokemonLogo from 'assets/pokemon-logo.svg';
 import AboutPage from './pages/About';
+import { HomeLayout } from './pages/Home/HomeLayout';
 
 const App = () => {
   return (
@@ -14,8 +15,9 @@ const App = () => {
       <main className="flex flex-col flex-1 items-center">
         <Routes>
           <Route path="/" element={<Navigate to="/home" replace />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/home/:page" element={<HomePage />} />
+          <Route path="/home" element={<HomeLayout />}>
+            <Route path=":page" element={<HomePage />} />
+          </Route>
           <Route path="/about" element={<AboutPage />} />
         </Routes>
       </main>

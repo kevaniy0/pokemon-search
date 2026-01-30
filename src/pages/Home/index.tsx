@@ -54,13 +54,8 @@ const HomePage = () => {
       setIsInitialized(true);
     }
   }, []);
-  useEffect(() => {
-    if (page) return;
-    const lastPage = localStorage.getItem('pokemonLastPage') || 1;
-    navigate(`/home/${lastPage}`, { replace: true });
-  }, [page, navigate]);
 
-  if (!isInitialized || !page) return null;
+  if (!isInitialized) return null;
 
   const correctPage = Number(page);
   if (!correctPage || isNaN(correctPage) || correctPage < 1) {
