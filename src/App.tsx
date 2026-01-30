@@ -7,6 +7,7 @@ import logo from 'assets/Github-desktop-logo-symbol.svg.png';
 import pokemonLogo from 'assets/pokemon-logo.svg';
 import AboutPage from './pages/About';
 import { HomeLayout } from './pages/Home/HomeLayout';
+import { NotFoundPage } from './pages/404';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
             <Route path=":page" element={<HomePage />} />
           </Route>
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/*" element={<NotFoundPage />} />
         </Routes>
       </main>
       <Footer link={githubLink} image={logo} />

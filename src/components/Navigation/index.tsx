@@ -1,9 +1,8 @@
 import { NavLink } from 'react-router';
+export const baseNavClasses =
+  'px-4 py-2 rounded-md text-lg font-semibold transition-colors duration-200';
 
 const Navigation = () => {
-  const baseClasses =
-    'px-4 py-2 rounded-md text-lg font-semibold transition-colors duration-200';
-
   const activeClasses = 'bg-gray-900 text-white shadow-md';
   const inactiveClasses = 'text-gray-800 hover:bg-gray-100';
   return (
@@ -11,7 +10,7 @@ const Navigation = () => {
       <NavLink
         to="/home"
         className={({ isActive }) =>
-          `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`
+          `${baseNavClasses} ${isActive ? activeClasses : inactiveClasses}`
         }
       >
         Home
@@ -19,7 +18,7 @@ const Navigation = () => {
       <NavLink
         to="/about"
         className={({ isActive }) =>
-          `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`
+          `${baseNavClasses} ${isActive ? activeClasses : inactiveClasses}`
         }
       >
         About
