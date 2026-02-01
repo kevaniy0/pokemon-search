@@ -10,7 +10,8 @@ import extractData from '@/utils/extractData';
 import { validatePokemonData } from '@/utils/validateData';
 import getDelay from '@/utils/getDelay';
 import HttpError from '@/services/HttpError';
-import { Navigate, useNavigate, useParams } from 'react-router';
+import { Navigate, Outlet, useNavigate, useParams } from 'react-router';
+import Pagination from '@/components/Pagination';
 
 const baseState: HomePageState = {
   inputValue: '',
@@ -179,13 +180,15 @@ const HomePage = () => {
           </div>
         }
       >
-        <Results
-          results={currentItems}
-          currentPage={Number(page)}
-          totalPages={totalPages}
-          isLoading={state.isLoading}
-          forceError={state.forceError}
-          onChangePage={handlePageChange}
+        <section className="results-section flex items-center gap-y-2.5 gap-x-4 justify-center">
+          <Results results={currentItems} isLoading={state.isLoading} />
+          <Outlet context={{ results: state.results }} />
+        </section>
+        <Pagination
+          current={Number(page)}
+          hasItems={currentItems.length > 0}
+          onChange={handlePageChange}
+          pages={totalPages}
         />
       </ErrorBoundary>
     </div>

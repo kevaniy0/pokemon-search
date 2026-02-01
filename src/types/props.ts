@@ -14,10 +14,10 @@ export type HeaderProps = {
   logo: string;
 };
 
-export type ResultsProps = PokemonDataProps & {
-  onChangePage: (page: number) => void;
-  currentPage: number;
-  totalPages: number;
+export type ResultProps = {
+  results: Pokemon[];
+  isLoading: boolean;
+  forceError?: boolean;
 };
 
 export type InputProps = {
@@ -78,5 +78,5 @@ export type PaginationProps = {
   current: number;
   pages: number;
   onChange: (page: number) => void;
-  empty: boolean;
+  hasItems: boolean;
 };
