@@ -15,6 +15,11 @@ const TopControls = (props: TopControlsProps) => {
           type="text"
           value={props.value}
           onChange={props.onChange}
+          onKeyUp={(e) => {
+            if (e.key === 'Enter') {
+              props.onClick();
+            }
+          }}
           placeholder="type a pokemon name"
         />
         <Button
