@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router';
 export const baseNavClasses =
-  'px-4 py-2 rounded-md text-lg font-semibold transition-colors duration-200';
+  'px-2 md:px-4 py-1 md:py-2 rounded-md text-1xl md:text-lg font-semibold transition-colors duration-200';
 
 const Navigation = () => {
   const activeClasses = 'bg-gray-900 text-white shadow-md';
