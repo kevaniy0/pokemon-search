@@ -8,6 +8,7 @@ import pokemonLogo from 'assets/pokemon-logo.svg';
 import AboutPage from './pages/About';
 import { HomeLayout } from './pages/Home/HomeLayout';
 import { NotFoundPage } from './pages/404';
+import CardDescription from './components/CardDescription';
 
 const App = () => {
   return (
@@ -17,7 +18,9 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Navigate to="/home" replace />} />
           <Route path="/home" element={<HomeLayout />}>
-            <Route path=":page" element={<HomePage />} />
+            <Route path=":page" element={<HomePage />}>
+              <Route path="pokemon/:name" element={<CardDescription />} />
+            </Route>
           </Route>
           <Route path="/about" element={<AboutPage />} />
           <Route path="/*" element={<NotFoundPage />} />

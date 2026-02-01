@@ -1,22 +1,14 @@
 import './index.scss';
 import Card from '../Card';
 import type { PokemonDataProps } from '../../types/props';
-import type { Pokemon } from '../../types/pokemon';
-import { useState } from 'react';
-import CardDescription from '../CardDescription';
-
-type SelectedState = null | Pokemon;
+import { useNavigate } from 'react-router';
 
 const CardList = (props: PokemonDataProps) => {
-  const [selectedPokemon, setSelectedPokemon] = useState<SelectedState>(null);
+  const navigate = useNavigate();
   const { isLoading, results } = props;
 
-  const handleCardClick = (pokemon: Pokemon): void => {
-    setSelectedPokemon(() => pokemon);
-  };
-
-  const closeCard = () => {
-    setSelectedPokemon(() => null);
+  const handleCardClick = (name: string): void => {
+    navigate(`pokemon/${name}`);
   };
 
   if (!results || results.length === 0) {
@@ -35,7 +27,7 @@ const CardList = (props: PokemonDataProps) => {
           <li className="flex flex-col items-center w-max" key={item.name}>
             <Card
               onClick={() => {
-                handleCardClick(item);
+                handleCardClick(item.name);
               }}
               name={item.name}
               pic={item.pic}
@@ -43,21 +35,6 @@ const CardList = (props: PokemonDataProps) => {
           </li>
         ))}
       </ul>
-      {selectedPokemon ? (
-        <CardDescription
-          onClick={closeCard}
-          abilities={selectedPokemon.abilities
-            .map((item) => item.ability.name)
-            .join(', ')}
-          name={selectedPokemon.name}
-          pic={selectedPokemon.pic}
-          type={selectedPokemon.types.map((item) => item.type.name).join(', ')}
-          height={selectedPokemon.height}
-          weight={selectedPokemon.weight}
-        />
-      ) : (
-        ''
-      )}
     </div>
   );
 };
