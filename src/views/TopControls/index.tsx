@@ -3,6 +3,7 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Loader from '../../components/Loader';
 import type { TopControlsProps } from '../../types/props';
+import { btnClasses } from '@/components/Pagination/pagination-classes';
 
 const TopControls = (props: TopControlsProps) => {
   return (
@@ -10,30 +11,14 @@ const TopControls = (props: TopControlsProps) => {
       <div className="relative top-container flex justify-center gap-x-4 flex-wrap ">
         {props.isLoading && <Loader />}
         <Input
-          className="outline-0 border-2 rounded px-1 text-gray-900 font-medium  focus:border-3"
+          className="w-[160px] md:w-max outline-0 text-sm md:text-base border-2 rounded px-1 text-gray-900 font-medium focus:border-3"
           type="text"
           value={props.value}
           onChange={props.onChange}
           placeholder="type a pokemon name"
         />
         <Button
-          className={[
-            'search-btn',
-            'btn',
-            'text-gray-900',
-            'bg-white',
-            'font-medium',
-            'cursor-pointer',
-            'border-2',
-            'border-gray-900',
-            'rounded',
-            'transition-colors',
-            'duration-300',
-            'p-1',
-            'hover:bg-black',
-            'hover:text-white',
-            'hover:border-black',
-          ]}
+          className={btnClasses}
           name="Search"
           onClick={props.onClick}
         ></Button>

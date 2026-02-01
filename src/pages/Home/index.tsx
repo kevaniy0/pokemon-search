@@ -153,7 +153,7 @@ const HomePage = () => {
     }
   };
   return (
-    <div className="flex flex-col h-[100%]">
+    <div className="flex flex-col gap-y-4 h-[100%]">
       <TopControls
         isLoading={state.isLoading}
         value={state.searchItem}
@@ -180,7 +180,7 @@ const HomePage = () => {
           </div>
         }
       >
-        <section className="results-section flex items-center gap-y-2.5 gap-x-4 justify-center">
+        <section className="results-section flex items-center gap-y-2.5 gap-x-4 justify-center px-4">
           <Results results={currentItems} isLoading={state.isLoading} />
           <Outlet context={{ results: state.results }} />
         </section>

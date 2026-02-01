@@ -7,7 +7,10 @@ const baseBtnClasses = [
   'font-medium',
   'border-2',
   'rounded',
-  'px-4',
+  'text-sm',
+  'md:text-base',
+  'px-2',
+  'md:px-4',
   'py-1',
 ];
 

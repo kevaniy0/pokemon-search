@@ -3,7 +3,7 @@ import type { HeaderProps } from '@/types/props';
 
 const Header = ({ name, logo }: HeaderProps) => {
   return (
-    <header className="mb-7">
+    <header className="mb-3 md:mb-7">
       <div className="flex gap-6 justify-center items-center ">
         <h1 className="text-2xl  md:text-5xl font-black text-gray-900 drop-shadow-lg">
           {name}

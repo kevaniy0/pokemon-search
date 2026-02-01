@@ -5,8 +5,12 @@ const homeUrl = '/home';
 
 export const NotFoundPage = () => {
   return (
-    <div className="flex flex-col items-center gap-7">
-      <img className="w-[300px] h-auto" src={pic} alt="not found pic" />
+    <div className="flex flex-col items-center gap-7 px-10">
+      <img
+        className="w-[200px] lg:w-[300px] h-auto"
+        src={pic}
+        alt="not found pic"
+      />
       <p className="text-[20px] font-bold text-gray-900">
         The page you’re looking for doesn’t exist or may have been moved
       </p>

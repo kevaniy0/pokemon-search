@@ -22,7 +22,7 @@ const CardList = (props: PokemonDataProps) => {
     <div
       className={`cards-wrapper flex font-medium text-gray-600 ${isLoading ? 'opacity-20' : 'opacity-100'}`}
     >
-      <ul className="grid grid-cols-3 gap-7 justify-items-center w-max mx-auto">
+      <ul className="grid grid-cols-2 lg:grid-cols-3 gap-2 justify-items-center w-max mx-auto">
         {results.map((item) => (
           <li className="flex flex-col items-center w-max" key={item.name}>
             <Card
