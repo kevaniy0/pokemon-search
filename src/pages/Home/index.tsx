@@ -62,6 +62,8 @@ const HomePage = () => {
     const value = state.inputValue.trim();
     if (value === '') return;
 
+    if (state.isLoading) return;
+
     storage.updateSearchValue(value);
     setState((prev) => ({ ...prev, isLoading: true }));
 
