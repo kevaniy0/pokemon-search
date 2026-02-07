@@ -7,7 +7,7 @@ import { btnClasses } from '@/components/Pagination/pagination-classes';
 
 const TopControls = (props: TopControlsProps) => {
   return (
-    <section className="top-cotrols-section">
+    <section className="top-cotrols-section mb-4">
       <div className="relative top-container flex justify-center gap-x-4 flex-wrap ">
         {props.isLoading && <Loader />}
         <Input
