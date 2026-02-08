@@ -11,6 +11,7 @@ import HttpError from '@/services/HttpError';
 import { Navigate, Outlet, useNavigate, useParams } from 'react-router';
 import Pagination from '@/components/Pagination';
 import { usePokemonStorage } from '@/hooks/usePokemonStorage';
+import { waitDelay } from '@/utils/waitDelay';
 
 const baseState: HomePageState = {
   inputValue: '',
@@ -76,42 +77,39 @@ const HomePage = () => {
       );
       const newHistory = [data, ...checkedHistory];
       const delay = getDelay(startLoadingTime);
-      setTimeout(() => {
-        storage.updateResults(newHistory);
-        setState((prev) => ({
-          ...prev,
-          isLoading: false,
-          error: null,
-        }));
-        handlePageChange(1);
-      }, delay);
+      await waitDelay(delay);
+      storage.updateResults(newHistory);
+      setState((prev) => ({
+        ...prev,
+        isLoading: false,
+        error: null,
+      }));
+      handlePageChange(1);
     } catch (error) {
       const delay = getDelay(startLoadingTime);
+      await waitDelay(delay);
       if (error instanceof HttpError) {
-        setTimeout(() => {
-          setState((prev) => ({
-            ...prev,
-            inputValue: value,
-            error: {
-              status: error.status,
-              message: error.message,
-              source: 'http',
-            },
-            isLoading: false,
-          }));
-        }, delay);
+        setState((prev) => ({
+          ...prev,
+          inputValue: value,
+          error: {
+            status: error.status,
+            message: error.message,
+            source: 'http',
+          },
+          isLoading: false,
+        }));
       } else {
-        setTimeout(() => {
-          setState((prev) => ({
-            ...prev,
-            error: {
-              status: 500,
-              message: 'Unexpected error',
-              source: 'unexpected',
-            },
-            isLoading: false,
-          }));
-        }, delay);
+        await waitDelay(delay);
+        setState((prev) => ({
+          ...prev,
+          error: {
+            status: 500,
+            message: 'Unexpected error',
+            source: 'unexpected',
+          },
+          isLoading: false,
+        }));
       }
     }
   };
