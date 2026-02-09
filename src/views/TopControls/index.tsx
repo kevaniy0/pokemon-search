@@ -27,7 +27,7 @@ const TopControls = (props: TopControlsProps) => {
           name="Search"
           onClick={props.onClick}
         ></Button>
-        {(props.error?.status === 404 || props.error?.status === 400) && (
+        {props.error && (
           <div className="font-bold text-red-500 absolute top-10 left-1/2 -translate-x-1/2">
             {props.error.message}
           </div>
