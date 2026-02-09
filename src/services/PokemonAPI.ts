@@ -5,22 +5,33 @@ const baseUrl = 'https://pokeapi.co/api/v2/pokemon';
 const getPokemon = async (name: string): Promise<Data> => {
   const correctName = name.toLowerCase().trim();
   const url = `${baseUrl}/${correctName}`;
-  const response = await fetch(url);
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new HttpError(response.status, 'Pokemon not found');
+      }
+      if (response.status === 400) {
+        throw new HttpError(response.status, 'Bad Request');
+      }
+      throw new HttpError(
+        response.status,
+        response.statusText || 'Unknown Error'
+      );
+    }
 
-  if (!response.ok) {
-    if (response.status === 404) {
-      throw new HttpError(response.status, 'Pokemon not found');
+    return await response.json();
+  } catch (error: unknown) {
+    if (!navigator.onLine) {
+      throw new HttpError(0, 'No internet connection');
     }
-    if (response.status === 400) {
-      throw new HttpError(response.status, 'Bad Request');
+    if (error instanceof HttpError) {
+      throw error;
     }
-    throw new HttpError(
-      response.status,
-      response.statusText || 'Unknown Error'
-    );
+    const message =
+      error instanceof Error ? error.message : 'Unknown network error';
+    throw new HttpError(0, message);
   }
-
-  return await response.json();
 };
 
 export default getPokemon;

@@ -99,17 +99,6 @@ const HomePage = () => {
           },
           isLoading: false,
         }));
-      } else {
-        await waitDelay(delay);
-        setState((prev) => ({
-          ...prev,
-          error: {
-            status: 500,
-            message: 'Unexpected error',
-            source: 'unexpected',
-          },
-          isLoading: false,
-        }));
       }
     }
   };
