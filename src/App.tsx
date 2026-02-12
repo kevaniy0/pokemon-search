@@ -12,7 +12,7 @@ import CardDescription from './components/CardDescription';
 
 const App = () => {
   return (
-    <div className="container mx-auto flex flex-col h-[100vh]">
+    <div className="container mx-auto flex flex-col h-[100vh] font-delius">
       <Header name="Pokémon Search" logo={pokemonLogo} />
       <main className="flex flex-col flex-1 items-center">
         <Routes>

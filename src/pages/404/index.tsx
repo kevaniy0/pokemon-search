@@ -11,12 +11,12 @@ export const NotFoundPage = () => {
         src={pic}
         alt="not found pic"
       />
-      <p className="text-[20px] font-bold text-gray-900">
+      <p className="text-[20px] font-bold text-xDark dark:text-xLight">
         The page you’re looking for doesn’t exist or may have been moved
       </p>
       <Link
         to={homeUrl}
-        className={`w-max m-auto ${baseNavClasses} text-white bg-gray-900 hover:bg-gray-300 hover:text-black `}
+        className={`w-max m-auto ${baseNavClasses} border-2 text-xLight bg-xDark hover:bg-xLight hover:text-xDark dark:bg-xLight dark:border-xLight dark:text-xDark hover:dark:bg-xDark hover:dark:border-xLight hover:dark:text-xLight `}
       >
         Go back to Home
       </Link>

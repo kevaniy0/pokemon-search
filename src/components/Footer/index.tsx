@@ -3,7 +3,7 @@ import type { FooterProps } from '../../types/props';
 const Footer = (props: FooterProps) => {
   return (
     <footer className="flex justify-center items-center gap-5 pb-1">
-      <div className="font-medium  text-gray-600">© 2025</div>
+      <div className="font-bold  text-xDark dark:text-xLight">© 2025</div>
       <a
         className="block w-[32px] h-[32px]"
         href={props.link}
