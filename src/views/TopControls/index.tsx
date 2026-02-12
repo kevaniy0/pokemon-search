@@ -11,7 +11,7 @@ const TopControls = (props: TopControlsProps) => {
       <div className="relative top-container flex justify-center gap-x-4 flex-wrap ">
         {props.isLoading && <Loader />}
         <Input
-          className="w-[160px] md:w-max outline-0 text-sm md:text-base border-2 rounded px-1 text-gray-900 font-medium focus:border-3"
+          className="w-[160px] md:w-max outline-0 text-sm md:text-base border-2 rounded px-1 text-xDark dark:text-xLight border-xDark dark:border-xLight font-bold focus:border-3"
           type="text"
           value={props.value}
           onChange={props.onChange}

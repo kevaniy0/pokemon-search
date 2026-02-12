@@ -14,7 +14,9 @@ const CardList = (props: PokemonDataProps) => {
   if (!results || results.length === 0) {
     return (
       <div>
-        <p className="text-center font-medium text-gray-900">No results</p>
+        <p className="text-center font-bold text-xDark dark:text-xLight">
+          No results
+        </p>
       </div>
     );
   }

@@ -1,13 +1,15 @@
 const AboutPage = () => {
   return (
-    <section className="flex flex-col justify-between max-w-4xl mx-auto px-6 text-gray-900 h-[100%] font-[400] mb-5">
+    <section className="flex flex-col justify-between max-w-4xl mx-auto px-6 text-xDark dark:text-xLight h-[100%] font-[400] mb-5">
       <p className="text-lg leading-relaxed mb-6">
         This app allows you to search for Pokémon by name, view their images and
         stats, and manage your search history. It uses the{' '}
         <span className="font-semibold">PokéAPI</span> - a free public API that
         provides detailed Pokémon data.
       </p>
-      <h2 className="text-[20px] font-bold text-gray-900 mb-1">Stack:</h2>
+      <h2 className="text-[20px] font-bold text-xDark dark:text-xLight mb-1">
+        Stack:
+      </h2>
       <ul className="list-disc list-inside space-y-1 font-[600] text-lg  mb-4">
         <li>React</li>
         <li>TypeScript</li>
@@ -33,7 +35,9 @@ const AboutPage = () => {
           <span className="font-normal">(testing)</span>
         </li>
       </ul>
-      <h2 className="text-2xl font-bold text-gray-900 mb-4">How to use:</h2>
+      <h2 className="text-2xl font-bold text-xDark dark:text-xLight mb-4">
+        How to use:
+      </h2>
       <ul className="list-disc list-inside space-y-3 text-lg">
         <li>
           Type a Pokémon name into the search bar and click{' '}

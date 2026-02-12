@@ -28,7 +28,7 @@ const CardDescription = () => {
     return null;
   }
   return (
-    <div className="card-description h-[100%] rounded-2xl border-2 text-gray-900 p-4 relative">
+    <div className="card-description h-[100%] rounded-2xl border-2 text-xDark dark:bg-xLight dark:border-xLight p-4 relative">
       <div className="flex flex-col h-[100%] justify-between ">
         <div className="flex h-1/2 justify-center">
           <img

@@ -41,7 +41,7 @@ const Pagination = ({
   };
   const buttons = generatePages();
   return (
-    <div className="pagination-wpapper flex gap-1 justify-center">
+    <div className="pagination-wpapper flex gap-1 justify-center mb-2">
       <Button
         className={current === 1 ? NotAllowedButton : btnClasses}
         onClick={() => goTo(current - 1)}
@@ -50,7 +50,9 @@ const Pagination = ({
       />
       {buttons.map((item, i) => {
         return item === '...' ? (
-          <span key={item + i}>...</span>
+          <span key={item + i} className="dark:text-xLight">
+            ...
+          </span>
         ) : (
           <Button
             key={item + i}
