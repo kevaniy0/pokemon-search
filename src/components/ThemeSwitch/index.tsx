@@ -4,7 +4,7 @@ import Sun from 'assets/sun.svg?react';
 
 export const ThemeSwitch = () => {
   const { theme, toggleTheme } = useTheme();
-  const bubble = theme === 'light' ? 'left-[2px]' : 'left-[64px]';
+  const bubble = theme === 'light' ? 'left-[2px]' : 'left-[59px]';
   return (
     <>
       <div className="theme-switcher flex justify-center mb-4">
@@ -14,15 +14,16 @@ export const ThemeSwitch = () => {
             width="25"
             height="25"
           />
-          <div className="relative border-2 border-xDark dark:border-xLight bg-xLight dark:bg-xDark rounded-[50px]">
+          <div className="w-[86px] h-[30px] relative border-2 border-xDark dark:border-xLight bg-xLight dark:bg-xDark rounded-[50px]">
             <input
-              className="w-[86px] h-[100%] cursor-pointer opacity-0 "
+              name="input-name"
+              className="relative z-20 w-full h-full cursor-pointer opacity-0"
               type="checkbox"
               checked={theme === 'dark'}
               onChange={toggleTheme}
             />
             <span
-              className={`switch-bubble cursor-pointer w-[20px] h-[20px] border-2  border-xDark dark:border-xLight  rounded-[50%] absolute top-[2px] ${bubble} transition-all duration-300 ease-in-out`}
+              className={`switch-bubble cursor-pointer w-[20px] h-[20px] border-2  border-xDark dark:border-xLight  rounded-[50%] absolute top-[3px] ${bubble} transition-all duration-300 ease-in-out`}
             ></span>
           </div>
 
