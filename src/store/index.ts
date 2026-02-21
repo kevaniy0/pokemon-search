@@ -1,7 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { cardsReducer } from './cards/cardsSlice';
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    pokemonCards: cardsReducer,
+  },
 });
 
 export type AppStore = typeof store;
