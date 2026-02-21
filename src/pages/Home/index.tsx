@@ -12,6 +12,7 @@ import { Navigate, Outlet, useNavigate, useParams } from 'react-router';
 import Pagination from '@/components/Pagination';
 import { usePokemonStorage } from '@/hooks/usePokemonStorage';
 import { waitDelay } from '@/utils/waitDelay';
+import { SelectedCards } from '@/components/SelectedCards';
 
 const baseState: HomePageState = {
   inputValue: '',
@@ -103,7 +104,7 @@ const HomePage = () => {
     }
   };
   return (
-    <div className="flex flex-col gap-y-4 h-[100%]">
+    <div className="flex flex-col gap-y-4 h-[100%] items-center justify-between">
       <TopControls
         isLoading={state.isLoading}
         value={state.inputValue}
@@ -140,6 +141,7 @@ const HomePage = () => {
           onChange={handlePageChange}
           pages={totalPages}
         />
+        <SelectedCards />
       </ErrorBoundary>
     </div>
   );
