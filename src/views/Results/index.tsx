@@ -1,26 +1,17 @@
-import React from 'react';
 import './index.scss';
 import CardList from '../../components/CardList';
-import type { PokemonDataProps } from '../../types/props';
+import type { ResultProps } from '../../types/props';
 
-const SectionTitle = 'Results';
-
-class Results extends React.Component<PokemonDataProps> {
-  render(): React.ReactNode {
-    const { results } = this.props;
-    if (this.props.forceError) {
-      throw new Error('Искусственная ошибка');
-    }
-
-    return (
-      <section className="flex-1">
-        <h2 className="text-3xl font-bold text-center my-6 text-gray-600">
-          {SectionTitle}
-        </h2>
-        <CardList isLoading={this.props.isLoading} results={results} />
-      </section>
-    );
+const Results = (props: ResultProps) => {
+  if (props.forceError) {
+    throw new Error('Искусственная ошибка');
   }
-}
+
+  return (
+    <div className="card-list-wrapper">
+      <CardList isLoading={props.isLoading} results={props.results} />
+    </div>
+  );
+};
 
 export default Results;

@@ -1,1 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Delius&display=swap');
 @import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+@theme {
+  --font-delius: 'Delius', sans-serif;
+  --color-xLight: #f1f1f1;
+  --color-xDark: #212121;
+}

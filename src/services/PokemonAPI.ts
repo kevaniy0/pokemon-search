@@ -1,13 +1,12 @@
-import type { Pokemon } from '../types/pokemon';
+import type { Data } from '../types/pokemon';
 import HttpError from './HttpError';
-class PokemonAPI {
-  private baseUrl = 'https://pokeapi.co/api/v2/pokemon';
 
-  async getPokemon(name: string): Promise<Pokemon> {
-    const correctName = name.toLowerCase().trim();
-    const url = `${this.baseUrl}/${correctName}`;
+const baseUrl = 'https://pokeapi.co/api/v2/pokemon';
+const getPokemon = async (name: string): Promise<Data> => {
+  const correctName = name.toLowerCase().trim();
+  const url = `${baseUrl}/${correctName}`;
+  try {
     const response = await fetch(url);
-
     if (!response.ok) {
       if (response.status === 404) {
         throw new HttpError(response.status, 'Pokemon not found');
@@ -22,7 +21,17 @@ class PokemonAPI {
     }
 
     return await response.json();
+  } catch (error: unknown) {
+    if (!navigator.onLine) {
+      throw new HttpError(0, 'No internet connection');
+    }
+    if (error instanceof HttpError) {
+      throw error;
+    }
+    const message =
+      error instanceof Error ? error.message : 'Unknown network error';
+    throw new HttpError(0, message);
   }
-}
+};
 
-export default PokemonAPI;
+export default getPokemon;
