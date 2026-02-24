@@ -22,6 +22,7 @@ const CardList = (props: PokemonDataProps) => {
   }
   return (
     <div
+      data-testid="loading-opacity"
       className={`cards-wrapper flex font-medium text-gray-600 ${isLoading ? 'opacity-20' : 'opacity-100'}`}
     >
       <ul className="grid grid-cols-2 lg:grid-cols-3 gap-2 justify-items-center w-max mx-auto">
