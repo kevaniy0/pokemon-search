@@ -1,10 +1,20 @@
 import { render, screen } from '@testing-library/react';
 import CardList from 'src/components/CardList';
 import { mockPokemon } from 'tests/__mocks__/pokemon';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter, useNavigate } from 'react-router';
 import { cardsReducer } from '@/store/cards/cardsSlice';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
+import userEvent from '@testing-library/user-event';
+
+vi.mock('react-router', async () => {
+  const actual = await vi.importActual('react-router');
+  return {
+    ...actual,
+    useNavigate: vi.fn(),
+  };
+});
+
 const createTestStore = (initialState = []) => {
   return configureStore({
     reducer: {
@@ -17,7 +27,12 @@ const createTestStore = (initialState = []) => {
 };
 
 describe('CardList', () => {
+  const mockNavigate = vi.fn();
   const store = createTestStore();
+  beforeEach(() => {
+    vi.clearAllMocks();
+    vi.mocked(useNavigate).mockReturnValue(mockNavigate);
+  });
   it('should render correct number of items', () => {
     const list = [mockPokemon, mockPokemon, mockPokemon];
     render(
@@ -64,5 +79,21 @@ describe('CardList', () => {
     );
     const noResults = screen.getByText(/no results/i);
     expect(noResults).toBeInTheDocument();
+  });
+  it('should navigate to pokemon card when card is clicked', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <CardList results={[mockPokemon]} />
+        </MemoryRouter>
+      </Provider>
+    );
+    const card = screen.getByText(mockPokemon.name);
+    await user.click(card);
+
+    expect(mockNavigate).toHaveBeenCalledTimes(1);
+    expect(mockNavigate).toHaveBeenCalledWith(`pokemon/${mockPokemon.name}`);
   });
 });
