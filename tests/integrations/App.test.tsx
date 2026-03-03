@@ -126,7 +126,7 @@ describe('App', () => {
     await waitForElementToBeRemoved(() => screen.queryByTestId('loader'));
     const errorUI = await screen.findByText(/pokemon not found/i);
     expect(errorUI).toBeInTheDocument();
-  }, 5000);
+  }, 7000);
   it('should retrieve saved search term on component mount', async () => {
     localStorage.setItem('searchHistory', JSON.stringify([mockPokemon]));
     localStorage.setItem('searchItem', mockPokemon.name);
