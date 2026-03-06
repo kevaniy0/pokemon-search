@@ -14,13 +14,29 @@ const AboutPage = () => {
         <li>React</li>
         <li>TypeScript</li>
         <li>
+          Redux Toolkit{' '}
+          <span className="font-normal">(global state management)</span>
+        </li>
+        <li>
+          React Router{' '}
+          <span className="font-normal">
+            (client-side routing and navigation)
+          </span>
+        </li>
+        <li>
+          Context API{' '}
+          <span className="font-normal">
+            (Theme management with `useContext`)
+          </span>
+        </li>
+        <li>
           Vite <span className="font-normal">(project bundler)</span>
         </li>
         <li>
           Tailwind CSS <span className="font-normal">(styling)</span>
         </li>
         <li>
-          GitHub Pages <span className="font-normal">(deployment)</span>
+          Vercel <span className="font-normal">(deployment)</span>
         </li>
         <li>
           localStorage{' '}
