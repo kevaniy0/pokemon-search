@@ -6,7 +6,18 @@ import path from 'path';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
-  plugins: [react(), tailwindcss(), svgr(), tsconfigPaths()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    svgr({
+      svgrOptions: {
+        exportType: 'default',
+        namedExport: 'ReactComponent',
+      },
+      include: '**/*.svg?react',
+    }),
+    tsconfigPaths(),
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

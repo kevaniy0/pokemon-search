@@ -10,6 +10,7 @@ export const ThemeSwitch = () => {
       <div className="theme-switcher flex justify-center mb-4">
         <div className="theme-wrapper flex justify-center items-center gap-2 relative w-max h-[30px] ">
           <Sun
+            data-testid="sun-icon-test"
             fill={theme === 'light' ? '#212121' : '#f1f1f1'}
             width="25"
             height="25"
@@ -23,11 +24,13 @@ export const ThemeSwitch = () => {
               onChange={toggleTheme}
             />
             <span
+              data-testid="bubble-test"
               className={`switch-bubble cursor-pointer w-[20px] h-[20px] border-2  border-xDark dark:border-xLight  rounded-[50%] absolute top-[3px] ${bubble} transition-all duration-300 ease-in-out`}
             ></span>
           </div>
 
           <Moon
+            data-testid="moon-icon-test"
             fill={theme === 'light' ? '#212121' : '#f1f1f1'}
             width="25"
             height="25"
