@@ -38,7 +38,7 @@ describe('CardList', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <CardList results={list} />
+          <CardList mode="AllPokemons" results={list} />
         </MemoryRouter>
       </Provider>
     );
@@ -49,7 +49,11 @@ describe('CardList', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <CardList results={[mockPokemon]} isLoading={true} />
+          <CardList
+            mode="AllPokemons"
+            results={[mockPokemon]}
+            isLoading={true}
+          />
         </MemoryRouter>
       </Provider>
     );
@@ -61,7 +65,7 @@ describe('CardList', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <CardList results={[mockPokemon]} />
+          <CardList mode="AllPokemons" results={[mockPokemon]} />
         </MemoryRouter>
       </Provider>
     );
@@ -73,7 +77,7 @@ describe('CardList', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <CardList results={[]} />
+          <CardList mode="AllPokemons" results={[]} />
         </MemoryRouter>
       </Provider>
     );
@@ -86,7 +90,7 @@ describe('CardList', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <CardList results={[mockPokemon]} />
+          <CardList mode="AllPokemons" results={[mockPokemon]} />
         </MemoryRouter>
       </Provider>
     );

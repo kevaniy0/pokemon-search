@@ -1,16 +1,28 @@
+export type DataList = {
+  count: number;
+  results: {
+    name: string;
+    url: string;
+  }[];
+};
 export type Data = {
   abilities: PokemonAbilities[];
   name: string;
   height: number;
   weight: number;
   sprites: {
+    front_default: string | null;
     other: {
       dream_world: {
-        front_default: string;
+        front_default: string | null;
       };
     };
   };
   types: PokemonType[];
+};
+export type ResponseList = {
+  count: number;
+  pokemons: Data[];
 };
 export type Pokemon = {
   abilities: PokemonAbilities[];

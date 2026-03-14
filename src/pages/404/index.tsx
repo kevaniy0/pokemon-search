@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 import { baseNavClasses } from '@/components/Navigation';
 import pic from 'assets/http-404.png';
-const homeUrl = '/home';
+export const homeUrl = '/home';
 
 export const NotFoundPage = () => {
   return (

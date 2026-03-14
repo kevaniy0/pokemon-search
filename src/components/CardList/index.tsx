@@ -1,14 +1,25 @@
 import './index.scss';
 import Card from '../Card';
 import type { PokemonDataProps } from '../../types/props';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams, useSearchParams } from 'react-router';
 
 const CardList = (props: PokemonDataProps) => {
   const navigate = useNavigate();
+  const { page } = useParams();
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get('search');
+  const searchPage = searchParams.get('page');
   const { isLoading, results } = props;
 
   const handleCardClick = (name: string): void => {
-    navigate(`pokemon/${name}`);
+    if (props.mode === 'AllPokemons') {
+      navigate(`/home/${page}/pokemon/${name}`);
+    }
+    if (props.mode === 'Search') {
+      navigate(`pokemon/${name}?search=${searchQuery}&page=${searchPage}`, {
+        relative: 'path',
+      });
+    }
   };
 
   if (!results || results.length === 0) {
@@ -23,9 +34,11 @@ const CardList = (props: PokemonDataProps) => {
   return (
     <div
       data-testid="loading-opacity"
-      className={`cards-wrapper flex font-medium text-gray-600 ${isLoading ? 'opacity-20' : 'opacity-100'}`}
+      className={`relative cards-wrapper flex font-medium text-gray-600 `}
     >
-      <ul className="grid grid-cols-2 lg:grid-cols-3 gap-2 justify-items-center w-max mx-auto">
+      <ul
+        className={`grid grid-cols-2 lg:grid-cols-4 gap-2 justify-items-center w-max mx-auto ${isLoading ? 'opacity-20' : 'opacity-100'}`}
+      >
         {results.map((item, index) => (
           <li
             className="flex flex-col items-center w-max"

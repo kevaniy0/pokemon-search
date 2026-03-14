@@ -8,7 +8,7 @@ describe('Pagination Component', () => {
     render(
       <Pagination
         current={1}
-        hasItems={true}
+        elementsCount={12}
         pages={10}
         onChange={mockOnChange}
       />
@@ -21,7 +21,7 @@ describe('Pagination Component', () => {
     render(
       <Pagination
         current={1}
-        hasItems={false}
+        elementsCount={0}
         pages={10}
         onChange={mockOnChange}
       />
@@ -39,7 +39,7 @@ describe('Pages generation logic', () => {
       <Pagination
         current={1}
         pages={5}
-        hasItems={true}
+        elementsCount={12}
         onChange={mockOnChange}
       />
     );
@@ -53,7 +53,7 @@ describe('Pages generation logic', () => {
       <Pagination
         current={2}
         pages={10}
-        hasItems={true}
+        elementsCount={12}
         onChange={mockOnChange}
       />
     );
@@ -68,7 +68,7 @@ describe('Pages generation logic', () => {
       <Pagination
         current={5}
         pages={10}
-        hasItems={true}
+        elementsCount={12}
         onChange={mockOnChange}
       />
     );
@@ -89,7 +89,7 @@ describe('Navigation buttons', () => {
       <Pagination
         current={5}
         pages={10}
-        hasItems={true}
+        elementsCount={12}
         onChange={mockOnChange}
       />
     );
@@ -102,7 +102,7 @@ describe('Navigation buttons', () => {
       <Pagination
         current={1}
         pages={10}
-        hasItems={true}
+        elementsCount={12}
         onChange={mockOnChange}
       />
     );
@@ -114,7 +114,7 @@ describe('Navigation buttons', () => {
       <Pagination
         current={10}
         pages={10}
-        hasItems={true}
+        elementsCount={12}
         onChange={mockOnChange}
       />
     );
@@ -126,7 +126,7 @@ describe('Navigation buttons', () => {
       <Pagination
         current={5}
         pages={10}
-        hasItems={true}
+        elementsCount={12}
         onChange={mockOnChange}
       />
     );
@@ -146,7 +146,7 @@ describe('Page navigation', () => {
       <Pagination
         current={5}
         pages={10}
-        hasItems={true}
+        elementsCount={12}
         onChange={mockOnChange}
       />
     );
@@ -159,7 +159,7 @@ describe('Page navigation', () => {
       <Pagination
         current={5}
         pages={10}
-        hasItems={true}
+        elementsCount={12}
         onChange={mockOnChange}
       />
     );
@@ -173,7 +173,7 @@ describe('Page navigation', () => {
       <Pagination
         current={5}
         pages={10}
-        hasItems={true}
+        elementsCount={12}
         onChange={mockOnChange}
       />
     );
@@ -187,7 +187,7 @@ describe('Page navigation', () => {
       <Pagination
         current={5}
         pages={10}
-        hasItems={true}
+        elementsCount={12}
         onChange={mockOnChange}
       />
     );

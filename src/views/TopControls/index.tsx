@@ -9,7 +9,18 @@ const TopControls = (props: TopControlsProps) => {
   return (
     <section className="top-cotrols-section mb-4">
       <div className="relative top-container flex justify-center gap-x-4 flex-wrap ">
-        {props.isLoading && <Loader />}
+        {props.isLoading && (
+          <div className="absolute left-[-30px] top-[5px] ">
+            <Loader />
+          </div>
+        )}
+        {!props.isLoading && props.mode === 'Search' && (
+          <div className="absolute left-[-30px] top-[5px] ">
+            <button className="cursor-pointer" onClick={props.onCloseSearch}>
+              ❌
+            </button>
+          </div>
+        )}
         <Input
           className="w-[160px] md:w-max outline-0 text-sm md:text-base border-2 rounded px-1 text-xDark dark:text-xLight border-xDark dark:border-xLight font-bold focus:border-3"
           type="text"
