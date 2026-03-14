@@ -6,11 +6,14 @@ describe('TopControls', () => {
     value: 'cotrol',
     onChange: () => {},
     onClick: () => Promise.resolve(),
+    onCloseSeach: () => {},
     error: null,
   };
   it('should show Loader when isLoading prop true ', () => {
     render(
       <TopControls
+        mode="AllPokemons"
+        onCloseSearch={stub.onCloseSeach}
         value={stub.value}
         onChange={stub.onChange}
         onClick={stub.onClick}
@@ -24,6 +27,8 @@ describe('TopControls', () => {
   it('should hide loader when isLoading prop false', () => {
     render(
       <TopControls
+        mode="AllPokemons"
+        onCloseSearch={stub.onCloseSeach}
         value={stub.value}
         onChange={stub.onChange}
         onClick={stub.onClick}
