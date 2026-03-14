@@ -4,116 +4,117 @@ import TopControls from '@/views/TopControls';
 import type { HomePageState } from '@/types/props';
 import errorImg from 'assets/error2.jpg';
 import { useEffect, useState } from 'react';
-import getPokemon from '@/services/PokemonAPI';
-import extractData from '@/utils/extractData';
-import getDelay from '@/utils/getDelay';
-import HttpError from '@/services/HttpError';
-import { Navigate, Outlet, useNavigate, useParams } from 'react-router';
+import { Outlet, useNavigate, useParams, useSearchParams } from 'react-router';
 import Pagination from '@/components/Pagination';
-import { usePokemonStorage } from '@/hooks/usePokemonStorage';
-import { waitDelay } from '@/utils/waitDelay';
 import { SelectedCards } from '@/components/SelectedCards';
+import { getListPokemons, limitPerPage } from '@/services/ListPokemonsApi';
+import extractData from '@/utils/extractData';
+import type { DataList } from '@/types/pokemon';
+import getPokemon from '@/services/PokemonAPI';
 
 const baseState: HomePageState = {
+  mode: 'AllPokemons',
+  countPokemons: 0,
   inputValue: '',
   error: null,
   isLoading: false,
+  results: [],
 };
 
 const HomePage = () => {
-  const storage = usePokemonStorage();
-  const [state, setState] = useState<HomePageState>(baseState);
-
-  useEffect(() => {
-    if (storage.isInitialized) {
-      setState((prev) => ({ ...prev, inputValue: storage.searchItem }));
-    }
-  }, [storage.isInitialized, storage.searchItem]);
-
   const { page } = useParams();
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get('search') || '';
+  const pageQuery = searchParams.get('page') || 1;
   const navigate = useNavigate();
-  if (!storage.isInitialized) return null;
-
-  const correctPage = Number(page);
-  if (!correctPage || isNaN(correctPage) || correctPage < 1) {
-    return <Navigate to="/home/1" replace />;
-  }
-
-  const itemsPerPage = 6;
-  const startIndex = (correctPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentItems = storage.results.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(storage.results.length / itemsPerPage);
-
-  if (storage.results.length === 0 && correctPage !== 1) {
-    return <Navigate to="/home/1" replace />;
-  }
-  if (storage.results.length > 0 && correctPage > totalPages) {
-    return <Navigate to={`/home/${totalPages}`} replace />;
-  }
-
+  const [state, setState] = useState(() => {
+    const searchItem = localStorage.getItem('PokemonSearchitem') || '';
+    return { ...baseState, inputValue: searchItem };
+  });
+  useEffect(() => {
+    if (!page && !searchQuery) {
+      navigate('/home/1');
+      return;
+    }
+    setState((prev) => ({ ...prev, isLoading: true }));
+    if (!searchQuery) {
+      const loadAllList = async () => {
+        const response = await getListPokemons(Number(page) - 1);
+        const correctPokemons = response.pokemons.map((item) => {
+          return extractData(item);
+        });
+        setState((prev) => ({
+          ...prev,
+          mode: 'AllPokemons',
+          countPokemons: response.count,
+          results: correctPokemons,
+          isLoading: false,
+        }));
+      };
+      loadAllList();
+    } else {
+      const loadSearchList = async () => {
+        const getList = await fetch(
+          'https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0'
+        );
+        const names: DataList = await getList.json();
+        const matches = names.results.filter(({ name }) =>
+          name.includes(searchQuery.toLowerCase())
+        );
+        const startIndex = (limitPerPage - 1) * (Number(pageQuery) - 1);
+        const sliced = [...matches].splice(startIndex, limitPerPage);
+        const pokemonsPromises = sliced.map(async ({ name }) => {
+          const pokemon = await getPokemon(name);
+          const result = extractData(pokemon);
+          return result;
+        });
+        const searchPokemons = await Promise.all(pokemonsPromises);
+        setState((prev) => ({
+          ...prev,
+          mode: 'Search',
+          results: searchPokemons,
+          countPokemons: matches.length,
+          isLoading: false,
+        }));
+      };
+      loadSearchList();
+    }
+  }, [page, pageQuery, searchQuery, navigate]);
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState((prev) => ({ ...prev, inputValue: e.target.value }));
   };
 
   const handlePageChange = (page: number) => {
-    storage.updateLastPage(page);
-    navigate(`/home/${page}`);
+    if (state.mode === 'AllPokemons') {
+      navigate(`/home/${page}`);
+    }
+    if (state.mode === 'Search') {
+      navigate(`/home?search=${searchQuery}&page=${page}`);
+    }
   };
   const handleSearch = async () => {
     const value = state.inputValue.trim();
     if (value === '') return;
-
-    if (state.isLoading) return;
-
-    storage.updateSearchValue(value);
-    setState((prev) => ({ ...prev, isLoading: true }));
-
-    const startLoadingTime = Date.now();
-    try {
-      const pokemon = await getPokemon(value);
-      const data = extractData(pokemon);
-      const checkedHistory = storage.results.filter(
-        (item) => item.name !== data.name
-      );
-      const newHistory = [data, ...checkedHistory];
-      const delay = getDelay(startLoadingTime);
-      await waitDelay(delay);
-      storage.updateResults(newHistory);
-      setState((prev) => ({
-        ...prev,
-        isLoading: false,
-        error: null,
-      }));
-      handlePageChange(1);
-    } catch (error) {
-      const delay = getDelay(startLoadingTime);
-      await waitDelay(delay);
-      if (error instanceof HttpError) {
-        setState((prev) => ({
-          ...prev,
-          inputValue: value,
-          error: {
-            status: error.status,
-            message: error.message,
-            source: 'http',
-          },
-          isLoading: false,
-        }));
-      }
-    }
+    localStorage.setItem('PokemonSearchitem', state.inputValue);
+    navigate(`/home?search=${value}&page=1`);
+  };
+  const handleCloseSearch = () => {
+    localStorage.removeItem('PokemonSearchitem');
+    setState((prev) => ({ ...prev, inputValue: '' }));
+    navigate('/home');
   };
   return (
     <div className="flex flex-col gap-y-4 h-[100%] items-center justify-between">
       <TopControls
         isLoading={state.isLoading}
         value={state.inputValue}
+        mode={state.mode}
         onChange={handleInput}
         onClick={handleSearch}
+        onCloseSearch={handleCloseSearch}
         error={state.error}
       />
       <ErrorBoundary
-        key={state.inputValue}
         fallback={
           <div className="flex flex-1 flex-col items-center mt-20 mb-20 text-gray-600 gap-10">
             <h2 className="text-2xl font-medium">
@@ -132,14 +133,20 @@ const HomePage = () => {
         }
       >
         <section className="results-section flex items-center gap-y-2.5 gap-x-4 justify-center px-4">
-          <Results results={currentItems} isLoading={state.isLoading} />
-          <Outlet context={{ results: storage.results }} />
+          <Results
+            mode={state.mode}
+            results={state.results}
+            isLoading={state.isLoading}
+          />
+          <Outlet context={{ isLoading: state.isLoading }} />
         </section>
         <Pagination
-          current={Number(page)}
-          hasItems={currentItems.length > 0}
+          current={
+            state.mode === 'AllPokemons' ? Number(page) : Number(pageQuery)
+          }
+          elementsCount={state.countPokemons}
           onChange={handlePageChange}
-          pages={totalPages}
+          pages={Math.ceil(state.countPokemons / limitPerPage)}
         />
         <SelectedCards />
       </ErrorBoundary>

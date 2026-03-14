@@ -5,14 +5,15 @@ import {
   NotAllowedButton,
 } from './pagination-classes';
 import Button from '../Button';
+import { limitPerPage } from '@/services/ListPokemonsApi';
 
 const Pagination = ({
   current,
   pages,
   onChange,
-  hasItems,
+  elementsCount,
 }: PaginationProps) => {
-  if (!hasItems) return null;
+  if (elementsCount < limitPerPage) return null;
 
   const goTo = (page: number) => {
     if (page < 1 || page > pages) return;

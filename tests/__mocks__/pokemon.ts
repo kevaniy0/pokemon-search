@@ -37,6 +37,7 @@ export const mockPokemonApi: Data = {
   height: 3,
   name: 'spearow',
   sprites: {
+    front_default: null,
     other: {
       dream_world: {
         front_default:

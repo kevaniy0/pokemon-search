@@ -6,7 +6,6 @@ import { githubLink } from './components/Footer/footer-data';
 import logo from 'assets/Github-desktop-logo-symbol.svg.png';
 import pokemonLogo from 'assets/pokemon-logo.svg';
 import AboutPage from './pages/About';
-import { HomeLayout } from './pages/Home/HomeLayout';
 import { NotFoundPage } from './pages/404';
 import CardDescription from './components/CardDescription';
 
@@ -17,8 +16,8 @@ const App = () => {
       <main className="flex flex-col flex-1 items-center">
         <Routes>
           <Route path="/" element={<Navigate to="/home" replace />} />
-          <Route path="/home" element={<HomeLayout />}>
-            <Route path=":page" element={<HomePage />}>
+          <Route path="/home">
+            <Route path=":page?" element={<HomePage />}>
               <Route path="pokemon/:name" element={<CardDescription />} />
             </Route>
           </Route>

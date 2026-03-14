@@ -1,59 +1,75 @@
 import type { Pokemon } from '@/types/pokemon';
-import { useNavigate, useOutletContext, useParams } from 'react-router';
+import {
+  useNavigate,
+  useOutletContext,
+  useParams,
+  useSearchParams,
+} from 'react-router';
 import Button from '../Button';
 import CloseButton from 'assets/close_card.svg';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import getPokemon from '@/services/PokemonAPI';
+import extractData from '@/utils/extractData';
 
-type OutletContext = {
-  results: Pokemon[];
-};
+type PokemonState = Pokemon | null;
 
 const CardDescription = () => {
   const { name } = useParams();
+  const [searchParams] = useSearchParams();
+  const { isLoading } = useOutletContext<{ isLoading: boolean }>();
+  const searchQuery = searchParams.get('search');
+  const searchPage = searchParams.get('page');
   const navigate = useNavigate();
-  const { results } = useOutletContext<OutletContext>();
-  const pokemon = results.find((item) => item.name === name);
+  const [state, setState] = useState<PokemonState>(null);
 
   const handleClickClose = () => {
-    navigate(`..`);
+    if (searchQuery) {
+      navigate(`/home?search=${searchQuery}&page=${searchPage}`);
+    } else {
+      navigate(`..`);
+    }
   };
 
   useEffect(() => {
-    if (!pokemon) {
-      navigate('..', { replace: true });
-    }
-  }, [pokemon, navigate]);
+    if (!name) return;
+    const pokemonFetch = async () => {
+      const response = await getPokemon(name);
+      const data = extractData(response);
+      setState(data);
+    };
+    pokemonFetch();
+  }, [name]);
 
-  if (!pokemon) {
-    return null;
-  }
+  if (!state) return null;
   return (
-    <div className="card-description h-[100%] rounded-2xl border-2 text-xDark dark:bg-xLight dark:border-xLight p-4 relative">
+    <div
+      className={`${isLoading ? 'opacity-20' : 'opacity-100'} card-description h-[100%] rounded-2xl border-2 text-xDark dark:bg-xLight dark:border-xLight p-4 relative`}
+    >
       <div className="flex flex-col h-[100%] justify-between ">
         <div className="flex h-1/2 justify-center">
           <img
-            src={pokemon.pic}
-            alt={pokemon.name}
+            src={state.pic}
+            alt={state.name}
             className="max-h-full object-contain"
             style={{ imageRendering: 'pixelated' }}
           />
         </div>
         <ul className="flex flex-col text-[13px] lg:text-2xl">
           <li>
-            <b>Name:</b> {pokemon.name}
+            <b>Name:</b> {state.name}
           </li>
           <li>
-            <b>Type:</b> {pokemon.types.map((obj) => obj.type.name).join(', ')}
+            <b>Type:</b> {state.types.map((obj) => obj.type.name).join(', ')}
           </li>
           <li>
             <b>Abilities:</b>{' '}
-            {pokemon.abilities.map((obj) => obj.ability.name).join(', ')}
+            {state.abilities.map((obj) => obj.ability.name).join(', ')}
           </li>
           <li>
-            <b>Height:</b> {pokemon.height}
+            <b>Height:</b> {state.height}
           </li>
           <li>
-            <b>Weight:</b> {pokemon.weight}
+            <b>Weight:</b> {state.weight}
           </li>
         </ul>
         <Button

@@ -3,6 +3,7 @@ import type { Pokemon } from './pokemon';
 import type { AppError } from './pokemon';
 
 export type PokemonDataProps = {
+  mode: 'AllPokemons' | 'Search';
   results: Pokemon[];
   isLoading?: boolean;
   error?: AppError | null;
@@ -15,6 +16,7 @@ export type HeaderProps = {
 };
 
 export type ResultProps = {
+  mode: 'AllPokemons' | 'Search';
   results: Pokemon[];
   isLoading: boolean;
   forceError?: boolean;
@@ -65,15 +67,22 @@ type SearchError = {
   error: AppError | null;
 };
 export type HomePageState = {
+  mode: 'AllPokemons' | 'Search';
+  countPokemons: number;
   inputValue: string;
   error: AppError | null;
   isLoading: boolean;
+  results: Pokemon[];
 };
-export type TopControlsProps = InputProps & SearchError;
+export type TopControlsProps = InputProps &
+  SearchError & {
+    mode: 'AllPokemons' | 'Search';
+    onCloseSearch: () => void;
+  };
 
 export type PaginationProps = {
   current: number;
   pages: number;
   onChange: (page: number) => void;
-  hasItems: boolean;
+  elementsCount: number;
 };
