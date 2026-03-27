@@ -1,3 +1,7 @@
+export type PokemonByNames = {
+  name: string;
+  url: string;
+};
 export type DataList = {
   count: number;
   results: {

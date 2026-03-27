@@ -1,4 +1,3 @@
-import type { Pokemon } from '@/types/pokemon';
 import {
   useNavigate,
   useOutletContext,
@@ -7,20 +6,28 @@ import {
 } from 'react-router';
 import Button from '../Button';
 import CloseButton from 'assets/close_card.svg';
-import { useEffect, useState } from 'react';
-import getPokemon from '@/services/PokemonAPI';
-import extractData from '@/utils/extractData';
-
-type PokemonState = Pokemon | null;
+import { useGetPokemonByNameQuery } from '@/services/pokemonAPI';
+import { normalizedError } from '@/services/normalizeError';
+import Error from 'assets/Error.png';
 
 const CardDescription = () => {
-  const { name } = useParams();
+  const { name = '' } = useParams();
   const [searchParams] = useSearchParams();
   const { isLoading } = useOutletContext<{ isLoading: boolean }>();
   const searchQuery = searchParams.get('search');
   const searchPage = searchParams.get('page');
   const navigate = useNavigate();
-  const [state, setState] = useState<PokemonState>(null);
+  const { data, error } = useGetPokemonByNameQuery(name);
+  if (error) {
+    const correctError = normalizedError(error);
+    return (
+      <div className="flex flex-col items-center rounded-2xl border-2 text-xDark dark:bg-xLight dark:border-xLight p-4 text-[13px] lg:text-2xl">
+        <img src={Error} width="150px" height="150px"></img>
+        <div>{correctError.message}</div>
+      </div>
+    );
+  }
+  if (!data) return null;
 
   const handleClickClose = () => {
     if (searchQuery) {
@@ -30,17 +37,7 @@ const CardDescription = () => {
     }
   };
 
-  useEffect(() => {
-    if (!name) return;
-    const pokemonFetch = async () => {
-      const response = await getPokemon(name);
-      const data = extractData(response);
-      setState(data);
-    };
-    pokemonFetch();
-  }, [name]);
-
-  if (!state) return null;
+  if (!data) return null;
   return (
     <div
       className={`${isLoading ? 'opacity-20' : 'opacity-100'} card-description h-[100%] rounded-2xl border-2 text-xDark dark:bg-xLight dark:border-xLight p-4 relative`}
@@ -48,28 +45,28 @@ const CardDescription = () => {
       <div className="flex flex-col h-[100%] justify-between ">
         <div className="flex h-1/2 justify-center">
           <img
-            src={state.pic}
-            alt={state.name}
+            src={data.pic}
+            alt={data.name}
             className="max-h-full object-contain"
             style={{ imageRendering: 'pixelated' }}
           />
         </div>
         <ul className="flex flex-col text-[13px] lg:text-2xl">
           <li>
-            <b>Name:</b> {state.name}
+            <b>Name:</b> {data.name}
           </li>
           <li>
-            <b>Type:</b> {state.types.map((obj) => obj.type.name).join(', ')}
+            <b>Type:</b> {data.types.map((obj) => obj.type.name).join(', ')}
           </li>
           <li>
             <b>Abilities:</b>{' '}
-            {state.abilities.map((obj) => obj.ability.name).join(', ')}
+            {data.abilities.map((obj) => obj.ability.name).join(', ')}
           </li>
           <li>
-            <b>Height:</b> {state.height}
+            <b>Height:</b> {data.height}
           </li>
           <li>
-            <b>Weight:</b> {state.weight}
+            <b>Weight:</b> {data.weight}
           </li>
         </ul>
         <Button

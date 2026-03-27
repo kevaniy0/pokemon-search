@@ -5,7 +5,7 @@ import {
   NotAllowedButton,
 } from './pagination-classes';
 import Button from '../Button';
-import { limitPerPage } from '@/services/ListPokemonsApi';
+import { limitPerPage } from 'src/services/pokemonAPI';
 
 const Pagination = ({
   current,

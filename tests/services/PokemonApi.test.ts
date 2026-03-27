@@ -1,4 +1,4 @@
-import getPokemon from '@/services/PokemonAPI';
+import getPokemon from '@/services/PokemonAPI-OLD';
 import HttpError from '@/services/HttpError';
 import { mockPokemon } from 'tests/__mocks__/pokemon';
 

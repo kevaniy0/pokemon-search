@@ -1,13 +1,12 @@
 import type { ReactElement, ReactNode } from 'react';
-import type { Pokemon } from './pokemon';
+import type { Pokemon, PokemonByNames } from './pokemon';
 import type { AppError } from './pokemon';
+import type { NormalizedErrorObject } from '@/services/normalizeError';
 
 export type PokemonDataProps = {
   mode: 'AllPokemons' | 'Search';
-  results: Pokemon[];
+  results: PokemonByNames[];
   isLoading?: boolean;
-  error?: AppError | null;
-  forceError?: boolean;
 };
 
 export type HeaderProps = {
@@ -15,18 +14,18 @@ export type HeaderProps = {
   logo: string;
 };
 
-export type ResultProps = {
+export type ResultsProps = {
   mode: 'AllPokemons' | 'Search';
-  results: Pokemon[];
+  results: PokemonByNames[];
   isLoading: boolean;
-  forceError?: boolean;
-};
+  isFetching: boolean;
+} & PaginationProps;
 
 export type InputProps = {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClick: () => Promise<void>;
-  isLoading: boolean;
+  isFetching: boolean;
 };
 
 export type ButtonProps = {
@@ -63,9 +62,6 @@ export type FooterProps = {
   image: string;
 };
 
-type SearchError = {
-  error: AppError | null;
-};
 export type HomePageState = {
   mode: 'AllPokemons' | 'Search';
   countPokemons: number;
@@ -74,11 +70,11 @@ export type HomePageState = {
   isLoading: boolean;
   results: Pokemon[];
 };
-export type TopControlsProps = InputProps &
-  SearchError & {
-    mode: 'AllPokemons' | 'Search';
-    onCloseSearch: () => void;
-  };
+export type TopControlsProps = InputProps & {
+  error?: NormalizedErrorObject;
+  mode: 'AllPokemons' | 'Search';
+  onCloseSearch: () => void;
+};
 
 export type PaginationProps = {
   current: number;

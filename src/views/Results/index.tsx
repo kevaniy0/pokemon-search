@@ -1,17 +1,28 @@
-import './index.scss';
-import CardList from '../../components/CardList';
-import type { ResultProps } from '../../types/props';
+import { Outlet } from 'react-router';
+import Pagination from 'components/Pagination';
+import type { ResultsProps } from '@/types/props';
+import { limitPerPage } from '@/services/pokemonAPI';
+import CardList from 'components/CardList';
 
-const Results = (props: ResultProps) => {
+export const Results = (props: ResultsProps) => {
   return (
-    <div className="card-list-wrapper">
-      <CardList
-        mode={props.mode}
-        isLoading={props.isLoading}
-        results={props.results}
+    <>
+      <section className="results-section flex items-center gap-y-2.5 gap-x-4 justify-center px-4">
+        <div className="card-list-wrapper">
+          <CardList
+            mode={props.mode}
+            isLoading={props.isLoading}
+            results={props.results}
+          />
+        </div>
+        <Outlet context={{ isLoading: props.isLoading }} />
+      </section>
+      <Pagination
+        current={props.current}
+        elementsCount={props.elementsCount}
+        onChange={props.onChange}
+        pages={Math.ceil(props.elementsCount / limitPerPage)}
       />
-    </div>
+    </>
   );
 };
-
-export default Results;

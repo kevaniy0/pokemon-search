@@ -9,12 +9,12 @@ const TopControls = (props: TopControlsProps) => {
   return (
     <section className="top-cotrols-section mb-4">
       <div className="relative top-container flex justify-center gap-x-4 flex-wrap ">
-        {props.isLoading && (
+        {props.isFetching && (
           <div className="absolute left-[-30px] top-[5px] ">
             <Loader />
           </div>
         )}
-        {!props.isLoading && props.mode === 'Search' && (
+        {!props.isFetching && props.mode === 'Search' && (
           <div className="absolute left-[-30px] top-[5px] ">
             <button className="cursor-pointer" onClick={props.onCloseSearch}>
               ❌
@@ -39,7 +39,7 @@ const TopControls = (props: TopControlsProps) => {
           onClick={props.onClick}
         ></Button>
         {props.error && (
-          <div className="font-bold text-red-500 absolute top-10 left-1/2 -translate-x-1/2">
+          <div className="font-bold text-red-500 absolute top-10 left-1/2 -translate-x-1/2 whitespace-nowrap">
             {props.error.message}
           </div>
         )}

@@ -6,7 +6,7 @@ import {
 import App from 'src/App';
 import { mockPokemon, mockPokemonApi } from 'tests/__mocks__/pokemon';
 import userEvent from '@testing-library/user-event';
-import * as pokemonApi from '@/services/PokemonAPI';
+import * as pokemonApi from '@/services/PokemonAPI-OLD';
 import type { Pokemon } from 'src/types/pokemon';
 import HttpError from 'src/services/HttpError';
 import { renderWithProviders } from 'tests/test-utils/renderWithProvider';
