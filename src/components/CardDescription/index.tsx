@@ -22,7 +22,12 @@ const CardDescription = () => {
     const correctError = normalizedError(error);
     return (
       <div className="flex flex-col items-center rounded-2xl border-2 text-xDark dark:bg-xLight dark:border-xLight p-4 text-[13px] lg:text-2xl">
-        <img src={Error} width="150px" height="150px"></img>
+        <img
+          src={Error}
+          width="150px"
+          height="150px"
+          alt="error-response"
+        ></img>
         <div>{correctError.message}</div>
       </div>
     );
@@ -37,9 +42,9 @@ const CardDescription = () => {
     }
   };
 
-  if (!data) return null;
   return (
     <div
+      data-testid={`card-description-test`}
       className={`${isLoading ? 'opacity-20' : 'opacity-100'} card-description h-[100%] rounded-2xl border-2 text-xDark dark:bg-xLight dark:border-xLight p-4 relative`}
     >
       <div className="flex flex-col h-[100%] justify-between ">

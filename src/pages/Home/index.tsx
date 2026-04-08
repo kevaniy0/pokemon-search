@@ -4,11 +4,12 @@ import errorImg from 'assets/error2.jpg';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { SelectedCards } from '@/components/SelectedCards';
-import { limitPerPage } from 'src/services/pokemonAPI';
+import { limitPerPage } from '@/services/pokemonAPI';
 import { usePokemonData } from '@/hooks/usePokemonData';
 import { SkeletonCardList } from '@/components/Skeleton';
 import { Results } from '@/views/Results';
 import { normalizedError } from '@/services/normalizeError';
+
 const HomePage = () => {
   const { data, isLoading, isFetching, mode, error, currentPage, searchQuery } =
     usePokemonData();

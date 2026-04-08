@@ -1,4 +1,9 @@
-import type { Data, Pokemon } from '../../src/types/pokemon';
+import type { Data, Pokemon, PokemonByNames } from '../../src/types/pokemon';
+export const mockPokemonNames: PokemonByNames[] = [
+  { name: 'pikachu', url: 'https://pokeapi.co/api/v2/pokemon/pikachu' },
+  { name: 'bulbasaur', url: 'https://pokeapi.co/api/v2/pokemon/bulbasaur' },
+  { name: 'spearow', url: 'https://pokeapi.co/api/v2/pokemon/spearow' },
+];
 export const mockPokemon: Pokemon = {
   abilities: [
     {

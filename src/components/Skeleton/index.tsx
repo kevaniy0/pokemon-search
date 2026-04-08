@@ -1,4 +1,4 @@
-import { limitPerPage } from '@/services/PokemonAPI';
+import { limitPerPage } from '@/services/pokemonAPI';
 
 const skeletonCount = limitPerPage;
 const SkeletonCard = () => {
@@ -23,7 +23,10 @@ const SkeletonCard = () => {
 
 export const SkeletonCardList = () => {
   return (
-    <div className="relative cards-wrapper flex font-medium text-gray-600">
+    <div
+      data-testid="skeleton-card-list-test"
+      className="relative cards-wrapper flex font-medium text-gray-600"
+    >
       <ul className="grid grid-cols-2 lg:grid-cols-4 gap-2 justify-items-center w-max mx-auto">
         {Array.from({ length: skeletonCount }).map((_, index) => (
           <li key={index} className="flex flex-col items-center w-max">

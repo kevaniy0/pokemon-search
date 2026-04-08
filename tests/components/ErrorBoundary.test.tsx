@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import ErrorBoundary from 'src/components/ErrorBoundary';
+import ErrorBoundary from '@/components/ErrorBoundary';
 import React from 'react';
 
 class ProblemChild extends React.Component {

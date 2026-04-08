@@ -27,17 +27,30 @@ const CardList = (props: PokemonDataProps) => {
       });
     }
   };
+
   if (error) {
     const correctError = normalizedError(error);
     return (
       <div className="flex flex-col items-center rounded-2xl border-2 text-xDark dark:bg-xLight dark:border-xLight p-4 text-[13px] lg:text-2xl">
-        <img src={Error} width="150px" height="150px"></img>
+        <img
+          src={Error}
+          width="150px"
+          height="150px"
+          alt="error-response"
+        ></img>
         <div>{correctError.message}</div>
       </div>
     );
   }
   if (isLoading) return <SkeletonCardList />;
   if (!data) return null;
+  if (data && data.length === 0) {
+    return (
+      <div className=" text-xDark dark:text-xLight text-[13px] lg:text-2xl">
+        No results
+      </div>
+    );
+  }
   return (
     <div
       data-testid="loading-opacity"

@@ -8,7 +8,7 @@ import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import type { SerializedError } from '@reduxjs/toolkit/react';
 import { useParams, useSearchParams } from 'react-router';
 
-type usePokemonDataResults = {
+export type usePokemonDataResults = {
   data: DataList | null;
   mode: 'Search' | 'AllPokemons';
   isLoading: boolean;

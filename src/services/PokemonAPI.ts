@@ -19,6 +19,7 @@ export const pokemonAPI = createApi({
     getPokemonsByNames: builder.query<Pokemon[], string[]>({
       async queryFn(names, _queryApi, _extraOptions, baseQuery) {
         try {
+          if (names.length === 0) return { data: [] };
           const results = await Promise.all(
             names.map((name) => baseQuery(`pokemon/${name}`))
           );
