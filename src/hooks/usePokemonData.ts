@@ -37,7 +37,7 @@ export const usePokemonData = (): usePokemonDataResults => {
   let data = null;
   if (isSearchMode && showSearchPokemons.data) {
     const matches =
-      showSearchPokemons.data.results.filter(({ name }) => {
+      showSearchPokemons.data.results.filter(({ name }: { name: string }) => {
         return name.includes(searchQuery.toLowerCase());
       }) ?? [];
     const startIndex = (currentPage - 1) * limitPerPage;

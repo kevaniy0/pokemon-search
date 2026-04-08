@@ -1,6 +1,7 @@
 import './index.scss';
 import Card from '../Card';
 import type { PokemonDataProps } from '../../types/props';
+import type { Pokemon } from '@/types/pokemon';
 import { useNavigate, useParams, useSearchParams } from 'react-router';
 import { useGetPokemonsByNamesQuery } from '@/services/pokemonAPI';
 import { SkeletonCardList } from '../Skeleton';
@@ -59,7 +60,7 @@ const CardList = (props: PokemonDataProps) => {
       <ul
         className={`grid grid-cols-2 lg:grid-cols-4 gap-2 justify-items-center w-max mx-auto ${isFetching ? 'opacity-20' : 'opacity-100'}`}
       >
-        {data.map((item, index) => (
+        {data.map((item: Pokemon, index: number) => (
           <li
             className="flex flex-col items-center w-max"
             key={item.name + index}

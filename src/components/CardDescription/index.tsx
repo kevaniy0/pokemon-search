@@ -9,6 +9,7 @@ import CloseButton from 'assets/close_card.svg';
 import { useGetPokemonByNameQuery } from '@/services/pokemonAPI';
 import { normalizedError } from '@/services/normalizeError';
 import Error from 'assets/Error.png';
+import type { PokemonType, PokemonAbilities } from '@/types/pokemon';
 
 const CardDescription = () => {
   const { name = '' } = useParams();
@@ -61,11 +62,14 @@ const CardDescription = () => {
             <b>Name:</b> {data.name}
           </li>
           <li>
-            <b>Type:</b> {data.types.map((obj) => obj.type.name).join(', ')}
+            <b>Type:</b>{' '}
+            {data.types.map((obj: PokemonType) => obj.type.name).join(', ')}
           </li>
           <li>
             <b>Abilities:</b>{' '}
-            {data.abilities.map((obj) => obj.ability.name).join(', ')}
+            {data.abilities
+              .map((obj: PokemonAbilities) => obj.ability.name)
+              .join(', ')}
           </li>
           <li>
             <b>Height:</b> {data.height}
