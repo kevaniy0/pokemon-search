@@ -2,7 +2,7 @@ import {
   limitPerPage,
   useGetPokemonByPageQuery,
   useGetPokemonsAllListQuery,
-} from '@/services/pokemonAPI';
+} from '@/services/PokemonAPI';
 import type { DataList } from '@/types/pokemon';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import type { SerializedError } from '@reduxjs/toolkit/react';

@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router';
 import Pagination from 'components/Pagination';
 import type { ResultsProps } from '@/types/props';
-import { limitPerPage } from '@/services/pokemonAPI';
+import { limitPerPage } from '@/services/PokemonAPI';
 import CardList from 'components/CardList';
 
 export const Results = (props: ResultsProps) => {

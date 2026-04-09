@@ -1,4 +1,4 @@
-import { limitPerPage } from '@/services/pokemonAPI';
+import { limitPerPage } from '@/services/PokemonAPI';
 
 const skeletonCount = limitPerPage;
 const SkeletonCard = () => {

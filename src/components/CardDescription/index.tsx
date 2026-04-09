@@ -6,7 +6,7 @@ import {
 } from 'react-router';
 import Button from '../Button';
 import CloseButton from 'assets/close_card.svg';
-import { useGetPokemonByNameQuery } from '@/services/pokemonAPI';
+import { useGetPokemonByNameQuery } from '@/services/PokemonAPI';
 import { normalizedError } from '@/services/normalizeError';
 import Error from 'assets/Error.png';
 import type { PokemonType, PokemonAbilities } from '@/types/pokemon';

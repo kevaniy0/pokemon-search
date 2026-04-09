@@ -3,7 +3,7 @@ import Card from '../Card';
 import type { PokemonDataProps } from '../../types/props';
 import type { Pokemon } from '@/types/pokemon';
 import { useNavigate, useParams, useSearchParams } from 'react-router';
-import { useGetPokemonsByNamesQuery } from '@/services/pokemonAPI';
+import { useGetPokemonsByNamesQuery } from '@/services/PokemonAPI';
 import { SkeletonCardList } from '../Skeleton';
 import { normalizedError } from '@/services/normalizeError';
 import Error from 'assets/Error.png';
