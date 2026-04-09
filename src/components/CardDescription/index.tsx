@@ -46,14 +46,14 @@ const CardDescription = () => {
   return (
     <div
       data-testid={`card-description-test`}
-      className={`${isLoading ? 'opacity-20' : 'opacity-100'} card-description h-[100%] rounded-2xl border-2 text-xDark dark:bg-xLight dark:border-xLight p-4 relative`}
+      className={`${isLoading ? 'opacity-20' : 'opacity-100'} card-description w-72 lg:w-80 min-h-[400px] rounded-2xl border-2 text-xDark dark:bg-xLight dark:border-xLight p-4 relative flex-shrink-0`}
     >
       <div className="flex flex-col h-[100%] justify-between ">
-        <div className="flex h-1/2 justify-center">
+        <div className="flex justify-center h-40">
           <img
             src={data.pic}
             alt={data.name}
-            className="max-h-full object-contain"
+            className="max-h-full max-w-full object-contain"
             style={{ imageRendering: 'pixelated' }}
           />
         </div>
