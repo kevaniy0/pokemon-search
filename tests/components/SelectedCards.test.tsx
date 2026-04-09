@@ -3,15 +3,19 @@ import { render, screen } from '@testing-library/react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import userEvent from '@testing-library/user-event';
 import { resetItems } from '@/store/cards/cardsSlice';
-import { validatePokemonData } from '@/utils/validateData';
+import { useGetPokemonsByNamesQuery } from '@/services/PokemonAPI';
 
 vi.mock('@/store/hooks', () => ({
   useAppDispatch: vi.fn(),
   useAppSelector: vi.fn(),
 }));
-vi.mock('@/utils/validateData', () => ({
-  validatePokemonData: vi.fn(),
-}));
+vi.mock('@/services/PokemonAPI', async (importOriginal) => {
+  const actual = await importOriginal<Record<string, unknown>>();
+  return {
+    ...actual,
+    useGetPokemonsByNamesQuery: vi.fn(),
+  };
+});
 
 describe('SelectedCards Component', () => {
   const mockDispatch = vi.fn();
@@ -19,7 +23,20 @@ describe('SelectedCards Component', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.mocked(useAppDispatch).mockReturnValue(mockDispatch);
-    localStorage.clear();
+    vi.mocked(useGetPokemonsByNamesQuery).mockReturnValue({
+      data: [],
+      isLoading: false,
+      isFetching: false,
+      isSuccess: true,
+      isError: false,
+      error: undefined,
+      currentData: [],
+      originalArgs: [],
+      endpointName: 'getPokemonsByNames',
+      startedTimeStamp: 0,
+      fulfilledTimeStamp: 0,
+      refetch: vi.fn(),
+    });
   });
   it('should return null when no cards selected', () => {
     vi.mocked(useAppSelector).mockReturnValue([]);
@@ -63,7 +80,7 @@ describe('SelectedCards Component', () => {
 });
 describe('Download Functionality', () => {
   const user = userEvent.setup();
-  const mockData = [
+  const mockPokemons = [
     {
       name: 'pikachu',
       types: [{ type: { name: 'electric' } }],
@@ -82,11 +99,25 @@ describe('Download Functionality', () => {
   const originalCreateElement = document.createElement.bind(document);
   const mockLink = document.createElement('a');
   const clickSpy = vi.spyOn(mockLink, 'click').mockImplementation(() => {});
+
   beforeEach(() => {
-    localStorage.clear();
     global.URL.createObjectURL = vi.fn(() => 'blob:mock-url');
     global.URL.revokeObjectURL = vi.fn();
     vi.mocked(useAppSelector).mockReturnValue(['pikachu', 'spearow']);
+    vi.mocked(useGetPokemonsByNamesQuery).mockReturnValue({
+      data: mockPokemons,
+      isLoading: false,
+      isFetching: false,
+      isSuccess: true,
+      isError: false,
+      error: undefined,
+      currentData: mockPokemons,
+      originalArgs: ['pikachu', 'spearow'],
+      endpointName: 'getPokemonsByNames',
+      startedTimeStamp: 0,
+      fulfilledTimeStamp: 0,
+      refetch: vi.fn(),
+    });
     vi.spyOn(document, 'createElement').mockImplementation(
       (tagName: string) => {
         if (tagName === 'a') return mockLink;
@@ -94,14 +125,12 @@ describe('Download Functionality', () => {
       }
     );
   });
+
   afterEach(() => {
     vi.clearAllMocks();
   });
 
   it('should create CSV file with correct headers and data', async () => {
-    localStorage.setItem('searchHistory', JSON.stringify(mockData));
-    vi.mocked(validatePokemonData).mockReturnValue(true);
-
     render(<SelectedCards />);
 
     const button = screen.getByText(/download/i);
@@ -114,8 +143,21 @@ describe('Download Functionality', () => {
     expect(global.URL.createObjectURL).toHaveBeenCalled();
   });
 
-  it('should not download when localStorage is empty', async () => {
-    vi.mocked(validatePokemonData).mockReturnValue(true);
+  it('should not download when no data from query', async () => {
+    vi.mocked(useGetPokemonsByNamesQuery).mockReturnValue({
+      data: undefined,
+      isLoading: false,
+      isFetching: false,
+      isSuccess: false,
+      isError: false,
+      error: undefined,
+      currentData: undefined,
+      originalArgs: ['pikachu', 'spearow'],
+      endpointName: 'getPokemonsByNames',
+      startedTimeStamp: 0,
+      fulfilledTimeStamp: 0,
+      refetch: vi.fn(),
+    });
 
     render(<SelectedCards />);
 
@@ -123,41 +165,5 @@ describe('Download Functionality', () => {
 
     expect(clickSpy).not.toHaveBeenCalled();
     expect(global.URL.createObjectURL).not.toHaveBeenCalled();
-  });
-  it('should throw an error when validateData return false', async () => {
-    vi.mocked(validatePokemonData).mockReturnValue(false);
-    localStorage.setItem('searchHistory', JSON.stringify(mockData));
-
-    const createObjectURLSpy = vi.spyOn(global.URL, 'createObjectURL');
-    const revokeObjectURLSpy = vi.spyOn(global.URL, 'revokeObjectURL');
-
-    const uncaughtHandler = (error: Error) => {
-      expect(error.message).toBe('Error Parse Data');
-    };
-    process.on('uncaughtException', uncaughtHandler);
-
-    const rejectionHandler = (event: PromiseRejectionEvent) => {
-      expect(event.reason.message).toBe('Error Parse Data');
-      event.preventDefault();
-    };
-    window.addEventListener('unhandledrejection', rejectionHandler);
-
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
-
-    render(<SelectedCards />);
-
-    await user.click(screen.getByText(/download/i));
-
-    await new Promise((resolve) => setTimeout(resolve, 50));
-
-    expect(validatePokemonData).toHaveBeenCalled();
-    expect(createObjectURLSpy).not.toHaveBeenCalled();
-    expect(revokeObjectURLSpy).not.toHaveBeenCalled();
-
-    createObjectURLSpy.mockRestore();
-    revokeObjectURLSpy.mockRestore();
-    process.removeListener('uncaughtException', uncaughtHandler);
-    window.removeEventListener('unhandledrejection', rejectionHandler);
-    consoleSpy.mockRestore();
   });
 });
