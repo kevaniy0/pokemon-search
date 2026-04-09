@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import Card from 'src/components/Card';
-import { mockPokemon } from 'tests/__mocks__/pokemon';
+import Card from '@/components/Card';
+import { mockPokemon } from '../__mocks__/pokemon';
 import { addItem, cardsReducer, removeItem } from '@/store/cards/cardsSlice';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';

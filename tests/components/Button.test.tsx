@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Button from 'src/components/Button';
+import Button from '@/components/Button';
 
 describe('Button', () => {
   it('should render button component', () => {
@@ -12,6 +12,5 @@ describe('Button', () => {
     render(<Button name="Search" className={[]} />);
     const button = screen.getByRole('button', { name: /search/i });
     expect(button.className).toBe('');
-    screen.debug();
   });
 });
