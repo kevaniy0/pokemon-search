@@ -3,22 +3,21 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import Button from '../Button';
 import { btnClasses } from '../Pagination/pagination-classes';
 import { resetItems } from '@/store/cards/cardsSlice';
-import { validatePokemonData } from '@/utils/validateData';
+import { useGetPokemonsByNamesQuery } from '@/services/PokemonAPI';
 
 export const SelectedCards = () => {
   const dispatch = useAppDispatch();
   const cards = useAppSelector(selectorAll);
+  const { data: pokemons } = useGetPokemonsByNamesQuery(cards, {
+    skip: cards.length === 0,
+  });
+
   const handleDownloadItems = () => {
-    const elements = localStorage.getItem('searchHistory');
-    if (!elements) return;
-    const parsedData = JSON.parse(elements);
-    if (!validatePokemonData(parsedData)) throw new Error('Error Parse Data');
-    const extractedPokemons = parsedData.filter((item) =>
-      cards.includes(item.name)
-    );
+    if (!pokemons || pokemons.length === 0) return;
+
     const headers = ['Name', 'Type', 'Height', 'Weight', 'Img'];
 
-    const rows = extractedPokemons.map((pokemon) => [
+    const rows = pokemons.map((pokemon) => [
       pokemon.name,
       pokemon.types.map((item) => item.type.name).join(', ') || 'unknown',
       pokemon.height || '',
@@ -35,7 +34,7 @@ export const SelectedCards = () => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `${extractedPokemons.length}selectedCards.csv`;
+    link.download = `${pokemons.length}selectedCards.csv`;
     link.click();
     URL.revokeObjectURL(url);
   };
