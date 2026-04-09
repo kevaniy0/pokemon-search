@@ -18,6 +18,9 @@ const AboutPage = () => {
           <span className="font-normal">(global state management)</span>
         </li>
         <li>
+          RTK Query <span className="font-normal">(API calls and cache)</span>
+        </li>
+        <li>
           React Router{' '}
           <span className="font-normal">
             (client-side routing and navigation)

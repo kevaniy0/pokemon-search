@@ -7,7 +7,7 @@ The project allows searching for Pokémon and displaying their characteristics, 
 
 ## 📝 Features
 
-- Search Pokémon by name. (You can use numbers from 1 to 1025 if you don't know the names)
+- Search Pokémon by name.
 - Display a list of results with basic information: name, type, image, etc.
 - Theme switching - toggle between light and dark mode
 - Download Pokémon data - Export selected card information as CSV file
@@ -19,13 +19,14 @@ The project allows searching for Pokémon and displaying their characteristics, 
 
 - Full test coverage using **Vitest** and **React Testing Library**.
 
-- 84 tests across 17 files, including unit and integration tests for components, API calls, loading states, error handling, and localStorage.
+- 135 tests across 22 files, including unit and integration tests for components, API calls, loading states, error handling, and localStorage.
 
 ## ⚙️ Technologies
 
 - **React**
 - **TypeScript**
 - **Redux Toolkit** (global state management)
+- **RTK Query** (API calls and cache)
 - **React Router** (client-side routing and navigation)
 - **Context API** - Theme management with `useContext`
 - **Vite** (project bundler)
