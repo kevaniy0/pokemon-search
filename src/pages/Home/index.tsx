@@ -45,7 +45,7 @@ const HomePage = () => {
     navigate('/home/1');
   };
   return (
-    <div className="flex flex-col gap-y-4 h-[100%] items-center justify-between">
+    <div className="flex flex-col gap-y-4 h-[100%] items-center">
       <TopControls
         mode={mode}
         isFetching={isFetching}
