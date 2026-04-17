@@ -8,10 +8,9 @@ The project allows searching for Pokémon and displaying their characteristics, 
 ## 📝 Features
 
 - Search Pokémon by name.
-- Display a list of results with basic information: name, type, image, etc.
+- Display a list of pokemons with name and image.
 - Theme switching - toggle between light and dark mode
 - Download Pokémon data - Export selected card information as CSV file
-- Store recent search history in `localStorage`.
 - Error handling using a custom **ErrorBoundary**.
 - Responsive design using **Tailwind CSS**.
 
@@ -32,14 +31,13 @@ The project allows searching for Pokémon and displaying their characteristics, 
 - **Vite** (project bundler)
 - **Tailwind CSS** (styling)
 - **Vercel** (deployment)
-- **localStorage** (saving search history)
 - **Eslint**, **Prettier**, **Husky** (code quality and formatting)
 - **Vitest**, **React Testing Library** (testing)
 
 ## 📸 Screenshots
 
-<img src="./src/docs/Screenshot_13.png" alt="Main screen" width="700" />
-<img src="./src/docs/Screenshot_14.png" alt="Main screen" width="700" />
+<img src="./src/docs/screen1.png" alt="Main screen" width="700" />
+<img src="./src/docs/screen2.png" alt="Main screen" width="700" />
 
 ## 🚀 Installation & Running
 

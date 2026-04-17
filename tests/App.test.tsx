@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { cardsReducer } from '@/store/cards/cardsSlice';
-import { pokemonAPI } from '@/services/pokemonAPI';
+import { pokemonAPI } from '@/services/PokemonAPI';
 import { ThemeProvider } from '@/contexts/ThemeProvider';
 import * as usePokemonDataModule from '@/hooks/usePokemonData';
 
@@ -76,7 +76,7 @@ describe('App', () => {
 
   it('should render AboutPage on /about route', () => {
     renderApp(['/about']);
-    expect(screen.getByText(/about/i)).toBeInTheDocument();
+    expect(screen.getByText(/how to use/i)).toBeInTheDocument();
   });
 
   it('should render NotFoundPage on unknown route', () => {
